@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
           
 
   </head>
-  <body>
+  <body idUser="<?php echo $userId ; ?>">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
   <div class="super_container">
     
@@ -166,7 +166,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                       </div>
                       <div class="cart_content">
                         <div class="cart_text"><a href="cart.php">Cart</a></div>
-                        <div class="cart_price"><span id="cartPrice"><?php echo executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user;
+                        <div class="cart_price"><span id="cartPrice"><?php echo executeSingleValueQuery("SELECT FORMAT(ROUND(SUM(p.quantity * pr.PRIX), 2), 2) AS total_price
+FROM panier p
+JOIN products pr ON p.id_product = pr.id
+GROUP BY p.id_user;
+
 "); ?></span> MAD</div>
                       </div>
                     </div>
@@ -350,7 +354,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
               <?php include "php/load_products.php"; ?>
       </tbody>
     </table>
-  <div id="searchResults"></div>
+  <div id="searchResults">
+    
+  </div>
 
 
       
@@ -445,7 +451,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     </div>
   </footer>   
   <script>
-    // Select all elements with class 'svgContainer' and attach event listeners
     var svgContainers = document.querySelectorAll('.svgContainer');
     svgContainers.forEach(function(container) {
         container.addEventListener('click', function(event) {

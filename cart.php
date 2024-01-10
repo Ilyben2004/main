@@ -246,7 +246,7 @@ $query = "SELECT pr.* FROM panier p JOIN products pr ON p.id_product = pr.id ORD
 $cartResult = mysqli_query($conn, $query);
 foreach ($cartResult as $row) {
 ?>
-    <tr id="productRow_<?php echo $row['id']; ?>">
+    <tr Quantity="<?php echo $row['Quantity']; ?>" id="productRow_<?php echo $row['id']; ?>">
         <th scope="row" >
         <div class="d-flex align-items-center position-relative">
             <img src="./product_images/<?php echo $row['image_file']; ?>" class="img-fluid rounded-3 product-image" style="max-width: 200px;margin-left:18px" alt="">
@@ -257,7 +257,7 @@ foreach ($cartResult as $row) {
         </div>
         </th>
         <td class="align-middle">
-            <p class="mb-0" style="font-weight:bolder; text-align:center;"><?php echo $row['title']; ?></p>
+            <p class="mb-0" style="font-weight:bolder; text-align:center;"><?php echo $row['title']; ?> </p>
         </td>
         <td class="align-middle">
             <div class="d-flex flex-row">
@@ -265,7 +265,7 @@ foreach ($cartResult as $row) {
                     <i class="fas fa-minus"></i>
                 </button>
 
-                <input id="form1" min="0" name="quantity" value="<?php echo getQuantity($userId, $row['id']); ?>" type="number" class="form-control form-control-sm" style="width: 50px;" data-product-id="<?php echo $row['id']; ?>"
+                <input readonly id="form1" min="0" name="quantity" value="<?php echo getQuantity($userId, $row['id']); ?>" type="number" class="form-control form-control-sm" style="width: 50px;" data-product-id="<?php echo $row['id']; ?>"
                       data-user-id="<?php echo $userId; ?>" data-price-id="<?php echo $row['PRIX'];?>">
 
                       <button class="btn btn-link px-2" data-product-id="<?php echo $row['id']; ?>" data-user-id="<?php echo $userId; ?>">
@@ -473,6 +473,14 @@ foreach ($cartResult as $row) {
     <a class="text-reset fw-bold" href="index.php">ProFitFuel.com</a>
   </div>
 </footer>
+
+<div class="popup" id="myPopup">
+    <div class="popup-content">
+   
+        <p id="MessageQuantity">  <i class="fa-solid fa-xmark"></i> Sorry But we don't have this quantity now in the stock!</p>
+    </div>
+</div>
+
     
 </body>
 </html>

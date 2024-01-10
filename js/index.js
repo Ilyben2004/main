@@ -1,3 +1,6 @@
+userIdGlobale = document.body.getAttribute('idUser');
+console.log(userIdGlobale);
+
 document.addEventListener('DOMContentLoaded', function () {
     function updateCart(productPrice, productId) {
         var cartPriceElement = document.querySelector('.cart_price');
@@ -110,7 +113,7 @@ function updateQuantity(productId, change) {
     var quantityInput = document.querySelector('.form-control[data-product-id="' + productId + '"]');
     var currentQuantity = parseInt(quantityInput.value);
  
-    if (currentQuantity + change >= 0) {
+    if (currentQuantity + change >= 1) {
         quantityInput.value = currentQuantity + change;
 
         $.post("php/update_quantity.php", {
@@ -130,18 +133,30 @@ var quantityPlusButtons = document.querySelectorAll('.fa-plus');
 quantityMinusButtons.forEach(function (minusButton) {
     minusButton.addEventListener('click', function () {
         var productId = minusButton.closest('.d-flex').querySelector('.form-control').getAttribute('data-product-id');
+        
+
         decrementQuantity(productId);
         updateSubtotal();
-        decrementCart(productId);
     });
 });
 
 quantityPlusButtons.forEach(function (plusButton) {
     plusButton.addEventListener('click', function () {
+   
         var productId = plusButton.closest('.d-flex').querySelector('.form-control').getAttribute('data-product-id');
-        incrementQuantity(productId);
-        updateSubtotal();
-        updateCart();
+     var tr = document.getElementById('productRow_'+productId);
+     Quantitiavailiable =tr.getAttribute('Quantity');
+     var quantityWanted = document.querySelector('.form-control[data-product-id="' + productId + '"]').value;
+     console.log(quantityWanted);
+if(quantityWanted >= Quantitiavailiable ){
+    ShowQuantitimessage();
+
+}else{
+    incrementQuantity(productId);
+    updateSubtotal();
+}
+
+      
     });
 });
 
@@ -161,7 +176,8 @@ function decrementCart(productId) {
         $.ajax({
             url: 'php/search.php',
             type: 'GET',
-            data: { term: searchTerm },
+            data: { term: searchTerm , 
+              idUser : userIdGlobale },
             dataType: 'json',
             success: function (data) {
                 if (searchTerm.trim() === "") {
@@ -183,7 +199,8 @@ function decrementCart(productId) {
         return $.ajax({
             url: 'php/load_categories.php',
             type: 'GET',
-            data: { category: category },
+            data: { category: category ,
+                     Userid : userIdGlobale},
             dataType: 'json',
             error: function (xhr, status, error) {
                 console.error(error);
@@ -208,6 +225,27 @@ function decrementCart(productId) {
             if (count % 4 === 0) {
                 $searchResults.append('<tr>');
             }
+            var likeIcon = `<div 
+            data-user-id="${userIdGlobale}"
+             data-product-id="${products.id}" 
+              isLiked="0"
+               class="svgContainer" id="svgContainer" >
+             
+      <img src="./product_images/heart.png"" alt="">
+       
+         </div>`;
+if(products.isLiked==1 ){
+    likeIcon = `<div 
+            data-user-id="${userIdGlobale}"
+             data-product-id="${products.id}" 
+              isLiked="1"
+               class="svgContainer" id="svgContainer" >
+             
+      <img src="./product_images/hearted.png"" alt="">
+       
+         </div>`;
+  
+}
 
             $searchResults.append(
                 '<td>' +
@@ -217,6 +255,7 @@ function decrementCart(productId) {
                     'onmouseout="this.style.borderColor=\'transparent\'; this.style.transform=\'scale(1)\';" ' +
                     'style="border: 1px solid transparent; transition: border-color 0.4s ease-in-out; overflow: hidden;">' +
                 '<img src="./product_images/'+products.image_file +'" alt="' + products.image_file + '" style="width:75%">' +
+                likeIcon+
                 '<h2>' + products.title + '</h2>' +
                 '<p class="Price"><b>' + products.PRIX + ' MAD</b></p>' +
                 '</a>'+
@@ -239,6 +278,88 @@ function decrementCart(productId) {
             }
             $searchResults.append('</tr>');
         }
+        var svgContainers = document.querySelectorAll('.svgContainer');
+        svgContainers.forEach(function(container) {
+            container.addEventListener('click', function(event) {
+                 var isliked = this.getAttribute('isLiked');
+                 var idUser = this.getAttribute('data-user-id');
+                 var idProduct = this.getAttribute('data-product-id');
+    
+                 console.log(idUser);
+                 console.log(idProduct);
+    
+                 if(idUser==0 ){
+                  showSignUpMessage();
+                 }
+                 else{
+                  if(isliked==1){
+    
+    
+                    // ************************** // 
+    
+                    fetch('PHP/removeFromLike.php', {
+        method: 'POST',
+        body: new URLSearchParams({
+            'idU': idUser,
+            'idP': idProduct
+        })
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data); // Handle the response from PHP
+        this.innerHTML='<img src="./product_images/heart.png" alt="">';
+                    this.setAttribute('isLiked',0);
+    })
+    .catch(error => {
+        console.error('There was an error with the fetch operation:', error);
+    });
+    
+    
+                    //***************************// 
+                    
+                
+    
+                  }
+                  else{
+    
+    
+    
+    
+    
+                    //*************************** *//
+                    fetch('PHP/addToLike.php', {
+        method: 'POST',
+        body: new URLSearchParams({
+            'idU': idUser,
+            'idP': idProduct
+        })
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log(data); // Handle the response from PHP
+        this.innerHTML='<img src="./product_images/hearted.png" alt="">';
+                    this.setAttribute('isLiked',1);
+                    var audio =document.getElementById('likesound');
+                    playAudio(audio) ;
+       
+    
+    })
+    .catch(error => {
+        console.error('There was an error with the fetch operation:', error);
+    });
+    
+                    //****************************************//
+                  
+    
+    
+                  }
+                 }
+    
+    
+                event.preventDefault();
+                // Your additional logic or actions here (if needed)
+            });
+        });
     }
 
     function handleCategoryFilter(category) {
@@ -602,4 +723,14 @@ function addAllToCart()
                     //****************************************//
    
 
+}
+
+function ShowQuantitimessage(){
+    var popup = document.getElementById('myPopup');
+    popup.style.display='block';
+    setInterval(function(){
+        popup.style.display='none';
+
+    }, 4000)
+   
 }

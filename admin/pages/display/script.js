@@ -2,20 +2,21 @@
 document.addEventListener("DOMContentLoaded", function () {
   let selectMenu = document.querySelector("#products");
   let container = document.querySelector(".content_users");
+  let selectprice =  document.querySelector("#priceFilter");
+  sellsfilter
+  let selectsells =  document.querySelector("#sellsfilter");
+
 
   fetch('get_categories.php')
   .then(response => response.json())
   .then(data => {
-    console.log(data); 
    data.forEach(element => {
-    console.log(element);
       
     });
     selectMenu.addEventListener("change", function () {
    
       let categoryName = this.value;
      
-      console.log(categoryName);
      
 
       let http = new XMLHttpRequest();
@@ -122,8 +123,29 @@ data.forEach(element => {
 
           
               out+=" </table> </div>";
-              console.log(out);
               container.innerHTML = out;
+              if(selectprice.value==1){
+                console.log("called");
+                highToLow(3);
+
+              }
+            else if (selectprice.value==2){
+              console.log("called2");
+
+              lowToHigh(3);
+
+            }
+            if(selectsells.value==1){
+              console.log("called");
+              highToLow(6);
+
+            }
+          else if (selectsells.value==2){
+            console.log("called2");
+
+            lowToHigh(6);
+
+          }
           }
       };
 

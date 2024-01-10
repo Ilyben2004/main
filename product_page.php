@@ -92,9 +92,7 @@ if (isset($_GET['id'])) {
 <div style="display: inline-block; margin-top: 10px;"><a href="signup.php">Register</a></div>
 <div style="display: inline-block; margin-top: 10px;"><a href="login.php">Sign in</a></div>
 <?php } else { ?>
-<div style="display: inline-block;">
-<button type="button" id="editProfileBtn" class="btn btn-light" style="margin-top: 10px;">Edit Profile</button>
-</div>
+
 <form method="post" style="display: inline-block;">
 <button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">Log-Out</button>
 </form>
@@ -150,11 +148,15 @@ editProfileSection.style.display = 'block';
                     <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                       <div class="cart_icon">
                         <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918704/cart.png" alt="">
-                          <div class="cart_count"><span id="cartCount"><?php echo executeSingleValueQuery("SELECT SUM(quantity) AS quantity FROM panier WHERE id_user = '$userId'"); ?></span></div>
+                          <div class="cart_count"><span id="cartCount"><?php echo executeSingleValueQuery("SELECT count(*) FROM panier WHERE id_user = '$userId'"); ?></span></div>
                       </div>
                       <div class="cart_content">
                         <div class="cart_text"><a href="cart.php">Cart</a></div>
-                        <div class="cart_price"><span id="cartPrice"><?php echo executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user;
+                        <div class="cart_price"><span id="cartPrice"><?php echo executeSingleValueQuery("SELECT FORMAT(ROUND(SUM(p.quantity * pr.PRIX), 2), 2) AS total_price
+FROM panier p
+JOIN products pr ON p.id_product = pr.id
+GROUP BY p.id_user;
+
 "); ?></span> MAD</div>
                       </div>
                     </div>
@@ -187,6 +189,22 @@ editProfileSection.style.display = 'block';
                 <div class="col-md-5">
                     <div class="main-img">
                         <img class="img-fluid" src="./product_images/<?php echo $product['image_file']; ?>" alt="<?php echo $product['title']; ?>">
+                        <?php $isLiked =doesUserLikeProduct( $userId,$product['id']); ?>
+      <div 
+      data-user-id="<?php echo $userId; ?>"
+       data-product-id="<?php echo $product['id']?>" 
+        isLiked="<?php echo $isLiked ; ?>"
+         class="svgContainer" id="svgContainer" >
+        <?php $imageSource = "./product_images/heart.png";
+        if ($username == 0) {
+          $imageSource = "./product_images/heart.png";
+      }          elseif ($isLiked) {
+          $imageSource = "./product_images/hearted.png";
+      }
+      ?>
+<img src="<?php echo $imageSource; ?>" alt="">
+ 
+   </div>
                     </div>
                 </div>
                 <div class="col-md-7">
@@ -333,6 +351,92 @@ editProfileSection.style.display = 'block';
       <a class="text-reset fw-bold" href="https://mdbootstrap.com/">ProFitFuel.com</a>
     </div>
   </footer>
-      
+  <script>
+    var svgContainers = document.querySelectorAll('.svgContainer');
+    svgContainers.forEach(function(container) {
+        container.addEventListener('click', function(event) {
+             var isliked = this.getAttribute('isLiked');
+             var idUser = this.getAttribute('data-user-id');
+             var idProduct = this.getAttribute('data-product-id');
+
+             console.log(idUser);
+             console.log(idProduct);
+
+             if(idUser==0 ){
+              showSignUpMessage();
+             }
+             else{
+              if(isliked==1){
+
+
+                // ************************** // 
+
+                fetch('PHP/removeFromLike.php', {
+    method: 'POST',
+    body: new URLSearchParams({
+        'idU': idUser,
+        'idP': idProduct
+    })
+})
+.then(response => response.text())
+.then(data => {
+    console.log(data); // Handle the response from PHP
+    this.innerHTML='<img src="./product_images/heart.png" alt="">';
+                this.setAttribute('isLiked',0);
+})
+.catch(error => {
+    console.error('There was an error with the fetch operation:', error);
+});
+
+
+                //***************************// 
+                
+            
+
+              }
+              else{
+
+
+
+
+
+                //*************************** *//
+                fetch('PHP/addToLike.php', {
+    method: 'POST',
+    body: new URLSearchParams({
+        'idU': idUser,
+        'idP': idProduct
+    })
+})
+.then(response => response.text())
+.then(data => {
+    console.log(data); // Handle the response from PHP
+    this.innerHTML='<img src="./product_images/hearted.png" alt="">';
+                this.setAttribute('isLiked',1);
+                var audio =document.getElementById('likesound');
+                playAudio(audio) ;
+   
+
+})
+.catch(error => {
+    console.error('There was an error with the fetch operation:', error);
+});
+
+                //****************************************//
+              
+
+
+              }
+             }
+
+
+            event.preventDefault();
+            // Your additional logic or actions here (if needed)
+        });
+    });
+  
+</script> 
+
+<audio id="likesound" src="product_images/likeSound.mp3"></audio>
 </body>
 </html>

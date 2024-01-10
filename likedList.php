@@ -85,17 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     <div style="display: inline-block; margin-top: 10px;"><a href="signup.php">Register</a></div>
     <div style="display: inline-block; margin-top: 10px;"><a href="login.php">Sign in</a></div>
 <?php } else { ?>
-    <div style="display: inline-block;">
-      <button type="button" id="showUserCommand" class="btn btn-light" style="margin-top: 10px;" onclick="toggleUserOrders()">
-      <i class="fa-regular fa-handshake" style="margin-right: 8px;"> </i>
-      </button>
-    </div>
+    
   
+  <a href="index.php">
     <div style="display: inline-block;">
-       <button type="button" id="editProfileBtn" class="btn btn-light" style="margin-top: 10px;">
-       <i class="fa-regular fa-pen-to-square" style="margin-right: 8px;"> </i>
-      </button>
-    </div>
+       <button type="button"  class="btn btn-light" style="margin-top: 10px;">
+       <i class="fa-solid fa-house"></i>      </button>
+    </div></a>
    
     <form method="post" style="display: inline-block;">
         <button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">
@@ -152,7 +148,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                       </div>
                       <div class="cart_content">
                         <div class="cart_text"><a href="cart.php">Cart</a></div>
-                        <div class="cart_price"><span id="cartPrice"><?php echo executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user;
+                        <div class="cart_price"><span id="cartPrice"><?php echo executeSingleValueQuery("SELECT FORMAT(ROUND(SUM(p.quantity * pr.PRIX), 2), 2) AS total_price
+FROM panier p
+JOIN products pr ON p.id_product = pr.id
+GROUP BY p.id_user;
+
 "); ?></span> MAD</div>
                       </div>
                     </div>
