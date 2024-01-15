@@ -44,6 +44,8 @@ function lowToHigh(indice){
 
 document.getElementById('priceFilter').addEventListener('change',function(){
     document.getElementById('sellsfilter').value=0;
+    document.getElementById('likesfilter').value=0;
+
 if(this.value==1){
     highToLow(3);
 }
@@ -56,6 +58,8 @@ else{
 
 document.getElementById('sellsfilter').addEventListener('change',function(){
     document.getElementById('priceFilter').value=0;
+    document.getElementById('likesfilter').value=0;
+
     if(this.value==1){
         highToLow(6);
     }
@@ -63,5 +67,18 @@ document.getElementById('sellsfilter').addEventListener('change',function(){
         lowToHigh(6);
     }
     })
+
+    document.getElementById('likesfilter').addEventListener('change',function(){
+        document.getElementById('priceFilter').value=0;
+        document.getElementById('sellsfilter').value=0;
+
+        if(this.value==1){
+            highToLow(7);
+        }
+        else{
+            lowToHigh(7);
+        }
+        })
+        
     
     

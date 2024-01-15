@@ -82,13 +82,16 @@ function getAllProducts(){
    p.DESCREPTION, 
    p.image_file, 
    c.Category_name, 
-   COUNT(op.id_order) AS times_sold
+   COUNT(DISTINCT op.id_order) AS times_sold,
+   COUNT(DISTINCT lp.idUser) AS num_likes
 FROM 
    products p
-INNER JOIN 
+LEFT JOIN 
    category c ON c.id = p.id_category
 LEFT JOIN 
    order_product op ON op.id_product = p.id
+LEFT JOIN 
+   likedproducts lp ON lp.idProduct = p.id
 GROUP BY 
    p.id, 
    p.title, 
@@ -98,7 +101,8 @@ GROUP BY
    p.image_file, 
    c.Category_name
 ORDER BY 
-   p.title ");
+   p.title;
+");
    if ($res->num_rows > 0){
    while($row = $res->fetch_assoc()){
       $products[] = $row;
@@ -142,7 +146,8 @@ function getcatebyid($idcategory){
     p.Quantity,
     p.image_file,
     c.Category_name,
-    COALESCE(s.times_sold, 0) AS times_sold
+    COALESCE(s.times_sold, 0) AS times_sold,
+    COALESCE(l.num_likes, 0) AS num_likes
 FROM 
     products p
 INNER JOIN 
@@ -157,8 +162,18 @@ LEFT JOIN (
     GROUP BY 
         id_product
 ) s ON p.id = s.id_product
+LEFT JOIN (
+    SELECT 
+        idProduct,
+        COUNT(*) AS num_likes
+    FROM 
+        likedproducts
+    GROUP BY 
+        idProduct
+) l ON p.id = l.idProduct
 ORDER BY 
     p.title;
+
   ");
     if ($res->num_rows > 0){
     while($row = $res->fetch_assoc()){
@@ -343,6 +358,85 @@ function addLikedProductsToCart($userId) {
 }
 
 
+function executeUpdateQuery($updateQuery) {
+    // Get the database connection
+    $conn = connect();
+
+    // Check if the connection is successful
+    if ($conn) {
+        // Execute the UPDATE query
+        if ($conn->query($updateQuery) === TRUE) {
+            echo "Update query executed successfully";
+        } else {
+            echo "Error executing update query: " . $conn->error;
+        }
+
+        // Close the database connection
+        $conn->close();
+    }
+}
+
+function getTimeDifference($dateTime) {
+    // Convert the given datetime string to a DateTime object
+    $givenDateTime = new DateTime($dateTime);
+
+    // Get the current datetime
+    $currentDateTime = new DateTime();
+
+    // Calculate the difference between the two datetimes
+    $interval = $currentDateTime->diff($givenDateTime);
+
+    // Format the interval
+    $formattedInterval = '';
+
+    if ($interval->y > 0) {
+        $formattedInterval .= $interval->y . ' year' . ($interval->y > 1 ? 's' : '');
+    } elseif ($interval->m > 0) {
+        $formattedInterval .= $interval->m . ' month' . ($interval->m > 1 ? 's' : '');
+    } elseif ($interval->d > 0) {
+        $formattedInterval .= $interval->d . ' day' . ($interval->d > 1 ? 's' : '');
+    } elseif ($interval->h > 0) {
+        $formattedInterval .= $interval->h . ' hour' . ($interval->h > 1 ? 's' : '');
+    } elseif ($interval->i > 0) {
+        $formattedInterval .= $interval->i . ' minute' . ($interval->i > 1 ? 's' : '');
+    } elseif ($interval->s > 0) {
+        $formattedInterval .= $interval->s . ' second' . ($interval->s > 1 ? 's' : '');
+    } else {
+        return 'Just now';
+    }
+
+    return $formattedInterval . ' ago';
+}
+function getAllNotifications(){
+    $mysqli = connect();
+    $res = $mysqli->query("SELECT * FROM notifications order by id desc");
+
+    $notifications = array();
+
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+            // Apply the getTimeDifference function to format the date
+            $row['dateMessage'] = getTimeDifference($row['dateMessage']);
+            $notifications[] = $row;
+        }
+    } else {
+        $notifications = 0;
+    }
+
+    return $notifications;
+}
+function insertNotification($message, $type) {
+    $conn = connect();
+    $currentDateTime = new DateTime();
+
+    // Extract year, month, hour, and minutes
+    $formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
+    
+    $notiQuery = "INSERT INTO notifications (message,dateMessage,type) values ('$message','$formattedDateTime', '$type')";
+    mysqli_query($conn, $notiQuery);
+
+    $conn->close();
+}
 
 ?>
 

@@ -1192,7 +1192,6 @@ margin-right: 8px;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
-	color: rgb(234, 124, 124);
 }
 
 /* Content inside the popup */
@@ -1215,7 +1214,18 @@ margin-right: 8px;
 
 
 
+div#getAdress{
+	color: black;
+	width: 500px;
+	padding-left: 5%;
 
+}
+div#getAdress input{
+	margin-left: 1%;
+	border: #000000 1px solid;
+	padding-left: 0.5%;
+
+}
 /*sdsddds((((((((((((((((((((((((((*/
 
 

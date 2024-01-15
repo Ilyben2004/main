@@ -14,7 +14,7 @@ if (isset($_SESSION['username'])) {
 
 $userQuery = "SELECT id, EMAIL FROM users WHERE USERNAME     = '$username'";
 $userResult = mysqli_query($conn, $userQuery);
-
+$userId=0;
 if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userRow = mysqli_fetch_assoc($userResult);
     $userId = $userRow['id'];

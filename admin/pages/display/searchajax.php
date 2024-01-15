@@ -6,31 +6,42 @@ require '../../../PHP/Functions.php';
 $conn = connect(); 
 $name = mysqli_real_escape_string($conn, $_POST['name']); 
 $sql = "
-    SELECT 
-        p.id,
-        p.title,
-        p.PRIX,
-        p.Quantity,
-        p.image_file,
-        c.Category_name,
-        COALESCE(s.times_sold, 0) AS times_sold
-    FROM 
-        products p
-    INNER JOIN 
-        category c ON c.id = p.id_category 
-    LEFT JOIN (
-        SELECT 
-            id_product,
-            COUNT(*) AS times_sold
-        FROM 
-            order_product
-        GROUP BY 
-            id_product
-    ) s ON p.id = s.id_product
-    WHERE 
-        (p.title LIKE '%$name%' OR p.title LIKE '%$name' OR p.title LIKE '$name%')
-    ORDER BY 
-        p.title;
+SELECT 
+p.id,
+p.title,
+p.PRIX,
+p.Quantity,
+p.image_file,
+c.Category_name,
+COALESCE(s.times_sold, 0) AS times_sold,
+COALESCE(l.num_likes, 0) AS num_likes
+FROM 
+products p
+INNER JOIN 
+category c ON c.id = p.id_category 
+LEFT JOIN (
+SELECT 
+    id_product,
+    COUNT(*) AS times_sold
+FROM 
+    order_product
+GROUP BY 
+    id_product
+) s ON p.id = s.id_product
+LEFT JOIN (
+SELECT 
+    idProduct,
+    COUNT(*) AS num_likes
+FROM 
+    likedproducts
+GROUP BY 
+    idProduct
+) l ON p.id = l.idProduct
+WHERE 
+(p.title LIKE '%$name%' OR p.title LIKE '%$name' OR p.title LIKE '$name%')
+ORDER BY 
+p.title;
+
 ";
 
 $query = mysqli_query($conn, $sql);
@@ -45,7 +56,9 @@ $data = "<table>
     <td>Price</td>
     <td>Category</td>
     <td>Quantity</td>
-    <td>Times sold</td>
+    <td>Selled</td>
+    <td>Likes</td>
+
     <td>Actions</td>
 </tr>
 </thead>";
@@ -64,7 +77,10 @@ while ($row = mysqli_fetch_assoc($query)) {
     <td>{$row['PRIX']}</td>
     <td>{$row['Category_name']}</td>
     <td>{$row['Quantity']}</td>
+    
+
     <td>{$row['times_sold']}</td>
+    <td>{$row['num_likes']}</td>
 
    
    

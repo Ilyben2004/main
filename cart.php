@@ -481,6 +481,14 @@ foreach ($cartResult as $row) {
     </div>
 </div>
 
+<div class="popup" id="getAdresse">
+<div class="popup-content" id="getAdress"  >
+<label for=""> Please enter Your adresse :  </label><input id="adresseInput" type="text">
+
+
+</div>
+</div>
+
     
 </body>
 </html>

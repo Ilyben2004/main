@@ -1,5 +1,7 @@
 <?php
 require "config.php"; 
+require "Functions.php"; 
+
 require '../vendor/autoload.php'; 
 session_start();
 $conn = db();
@@ -9,6 +11,9 @@ use PHPMailer\PHPMailer\Exception;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userId = $_POST['user_id'];
+    $adress = $_POST['adress'];
+
+
 
     
     $orderStatus = 'Pending';
@@ -16,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $deliveryDate = date('Y-m-d', strtotime('+5 days')); 
 
     
-    $insertOrderQuery = "INSERT INTO orders (id_user, STATUS, ordate, dilivredate) VALUES ('$userId', '$orderStatus', '$orderDate', '$deliveryDate')";
+    $insertOrderQuery = "INSERT INTO orders (id_user, STATUS, ordate, dilivredate,adress) VALUES ('$userId', '$orderStatus', '$orderDate', '$deliveryDate','$adress')";
     mysqli_query($conn, $insertOrderQuery);
 
     
@@ -24,7 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $moveItemsQuery = "INSERT INTO order_product (id_order, id_product, quantity) SELECT '$orderId', id_product, quantity FROM panier WHERE id_user = '$userId'";
     mysqli_query($conn, $moveItemsQuery);
-
     $panierItemsQuery = "SELECT id_product, quantity FROM panier WHERE id_user = '$userId'";
     $panierItemsResult = mysqli_query($conn, $panierItemsQuery);
 
@@ -33,6 +37,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $quantity = $panierItem['quantity'];
 
         $updateProductQuery = "UPDATE products SET Quantity = Quantity - $quantity WHERE id = $productId";
+        $sql  = "select  Quantity from products where id ='$productId'";
+        $quantityCurrent =  executeSingleValueQuery( $sql);
+        $quantityCurrent -=  $quantity;
+        if( $quantityCurrent <50 &&  $quantityCurrent> 0 ){
+            $sql  = "select  title from products where id ='$productId'";
+            $productName =  executeSingleValueQuery( $sql);
+            $message = " The product ".$productName." with the id ".$productId." is alomost finished its still only ".$quantityCurrent." piece";
+            insertNotification($message,'product');
+             
+        }
+        elseif(  $quantityCurrent==0){
+            $sql  = "select  title from products where id ='$productId'";
+            $productName =  executeSingleValueQuery( $sql);
+            $message = " The product ".$productName." with the id ".$productId." is  finished";
+            insertNotification($message,'product');
+
+        }
         mysqli_query($conn, $updateProductQuery);
     }
 
@@ -62,6 +83,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $orderProductsStatement->bind_param('i', $orderId);
             $orderProductsStatement->execute();
             $orderProductsResult = $orderProductsStatement->get_result();
+            $currentDateTime = new DateTime();
+
+$message = " A new command is passed by ".$user['USERNAME']; 
+$formattedDateTime = $currentDateTime->format('Y-m-d H:i:s');
+
+$notiQuery = "INSERT INTO notifications (message,dateMessage,type) values ('$message','$formattedDateTime','command')";
+mysqli_query($conn, $notiQuery);
 
             if ($orderProductsResult) {
                 $totalBill = 0;

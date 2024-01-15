@@ -275,6 +275,13 @@ echo $result;
    <button onclick="closeForm(<?php echo $command['id'];?>)">
 	CLOSE THIS 
    </button>
+   <?php if ($command['STATUS'] != 'Cancelled' && $command['STATUS'] != 'Completed') { ?>
+
+   <button onclick="GetQrCode(<?php echo $command['id'];?>)">
+	Generate a QrCode
+   </button>
+   <?php }?>
+   
    <hr>
   
 </div>
@@ -374,7 +381,66 @@ function closeForm(formId) {
 </script>
 	<script src="script.js"></script> 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script>
+	  function downloadImage(imagePath) {
+        // Fetch the image as a blob
+        fetch(imagePath)
+            .then(response => response.blob())
+            .then(blob => {
+                // Create a Blob URL for the image blob
+                var blobUrl = URL.createObjectURL(blob);
 
+                // Create an anchor element
+                var downloadLink = document.createElement('a');
+
+                // Set the href attribute to the Blob URL
+                downloadLink.href = blobUrl;
+
+                // Set the download attribute to specify the file name
+                downloadLink.download = 'QRcode.jpg';
+
+                // Append the anchor element to the body
+                document.body.appendChild(downloadLink);
+
+                // Trigger a click on the anchor element
+                downloadLink.click();
+
+                // Remove the anchor element from the body
+                document.body.removeChild(downloadLink);
+
+                // Revoke the Blob URL to free up resources
+                URL.revokeObjectURL(blobUrl);
+            })
+            .catch(error => console.error('Error fetching image:', error));
+    }
+	function GetQrCode(CommandId){
+		console.log("yes");
+		fetch('../../../PHP/qrCode.php', {
+    method: 'POST',
+    body: new URLSearchParams({
+        'idCommand': CommandId,
+      
+    })
+})
+.then(response => response.text())
+.then(data => {
+
+	var tr = document.getElementById("tr_"+CommandId);
+		tr.children[2].innerHTML=`<svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M1 6C1 4.89543 1.89543 4 3 4H14C15.1046 4 16 4.89543 16 6V7H19C21.2091 7 23 8.79086 23 11V12V15V17C23.5523 17 24 17.4477 24 18C24 18.5523 23.5523 19 23 19H22H18.95C18.9828 19.1616 19 19.3288 19 19.5C19 20.8807 17.8807 22 16.5 22C15.1193 22 14 20.8807 14 19.5C14 19.3288 14.0172 19.1616 14.05 19H7.94999C7.98278 19.1616 8 19.3288 8 19.5C8 20.8807 6.88071 22 5.5 22C4.11929 22 3 20.8807 3 19.5C3 19.3288 3.01722 19.1616 3.05001 19H2H1C0.447715 19 0 18.5523 0 18C0 17.4477 0.447715 17 1 17V6ZM16.5 19C16.2239 19 16 19.2239 16 19.5C16 19.7761 16.2239 20 16.5 20C16.7761 20 17 19.7761 17 19.5C17 19.2239 16.7761 19 16.5 19ZM16.5 17H21V15V13H19C18.4477 13 18 12.5523 18 12C18 11.4477 18.4477 11 19 11H21C21 9.89543 20.1046 9 19 9H16V17H16.5ZM14 17H5.5H3V6H14V8V17ZM5 19.5C5 19.2239 5.22386 19 5.5 19C5.77614 19 6 19.2239 6 19.5C6 19.7761 5.77614 20 5.5 20C5.22386 20 5 19.7761 5 19.5Z" fill="#000000"></path> </g></svg>
+		`+`<span> `+ `Delevring` + `</span>`;
+		downloadImage(`../../../PHP/fileQR.png`);
+
+   
+   
+
+})
+.catch(error => {
+    console.error('There was an error with the fetch operation:', error);
+});
+
+		
+	}
+</script>
 </body>
 </html>
 

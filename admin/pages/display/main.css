@@ -40,7 +40,7 @@ table {
     padding: 20px;
   }
   tr {
-    background-color: #D6EEEE;
+    background-color: #faf8f8;
   }
   thead{
     background-color: #D6EEEE;
@@ -78,7 +78,7 @@ table {
 
   div#selects select {
     height: 40px;
-    width: 300px;
+    width: 21%;
     padding-left: 2%;
     margin-left: 3%;
   }

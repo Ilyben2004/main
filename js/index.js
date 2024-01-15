@@ -410,10 +410,17 @@ function updateSubtotal() {
 
 
 function checkout(userId) {
-    $.ajax({
+   var adresseForm =  document.getElementById('getAdresse');
+   adresseForm.style.display='block';
+   document.getElementById('adresseInput').addEventListener('keydown', function(event) {
+   
+    if (event.key === 'Enter') {
+        
+  $.ajax({
         url: 'php/checkout.php',
         method: 'POST',
-        data: { user_id: userId },
+        data: { user_id: userId ,
+        adress : document.getElementById('adresseInput').value},
         success: function (response) {
             console.log('Checkout successful:', response);
             
@@ -428,6 +435,16 @@ function checkout(userId) {
             console.error('Error during checkout:', error);
         }
     });
+
+
+
+
+    }
+});
+
+  
+
+    
 }
 
 document.addEventListener('DOMContentLoaded', function () {
