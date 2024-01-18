@@ -203,13 +203,24 @@ if (isset($_SESSION['username'])) {
          $products = getAllProducts();
 		 if ($products!=0){
          foreach ($products as $product) {
+			$class="normal";
+			if($product['Quantity']<=0){
+				$class="red_row";
+			}
+			elseif($product['Quantity']<20){
+				$class="orange_row";
+
+			}
+			elseif($product['Quantity']<50){
+				$class="yellow_row";
+
+			}
+
 		
 			   ?>
 		
 
-	<tr id="tr_product_<?php echo $product['id'];  ?>" <?php if($product['Quantity']<=0){
-		echo "class=red_row";
-	}?>>
+	<tr id="tr_product_<?php echo $product['id'];  ?>"  class="<?php echo $class ;?>">
 		
 	
 		<td><img src="..\..\..\product_images\<?php echo $product['image_file']; ?>" alt="" height="50px" width="50px"></td>
@@ -223,7 +234,7 @@ if (isset($_SESSION['username'])) {
 		<td><?php echo $product['Quantity'];?></td>
 		<td><?php echo $product['times_sold'];?></td>
 		<td><?php echo $product['num_likes'];?></td>
-		<td><a onclick="openForm('<?php echo $product['id']; ?>')"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect width="48" height="48" fill="white" fill-opacity="0.01"></rect> <path d="M42 26V40C42 41.1046 41.1046 42 40 42H8C6.89543 42 6 41.1046 6 40V8C6 6.89543 6.89543 6 8 6L22 6" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M14 26.7199V34H21.3172L42 13.3081L34.6951 6L14 26.7199Z" fill="#2F88FF" stroke="#000000" stroke-width="4" stroke-linejoin="round"></path> </g></svg> </a>
+		<td><a class="forModify" product-id="<?php echo $product['id'] ; ?>"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <rect width="48" height="48" fill="white" fill-opacity="0.01"></rect> <path d="M42 26V40C42 41.1046 41.1046 42 40 42H8C6.89543 42 6 41.1046 6 40V8C6 6.89543 6.89543 6 8 6L22 6" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M14 26.7199V34H21.3172L42 13.3081L34.6951 6L14 26.7199Z" fill="#2F88FF" stroke="#000000" stroke-width="4" stroke-linejoin="round"></path> </g></svg> </a>
 		<a onclick="deleteTr('<?php echo $product['id']; ?>')"><svg viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="10.24"><path d="M779.5 1002.7h-535c-64.3 0-116.5-52.3-116.5-116.5V170.7h768v715.5c0 64.2-52.3 116.5-116.5 116.5zM213.3 256v630.1c0 17.2 14 31.2 31.2 31.2h534.9c17.2 0 31.2-14 31.2-31.2V256H213.3z" fill="#0452c8"></path><path d="M917.3 256H106.7C83.1 256 64 236.9 64 213.3s19.1-42.7 42.7-42.7h810.7c23.6 0 42.7 19.1 42.7 42.7S940.9 256 917.3 256zM618.7 128H405.3c-23.6 0-42.7-19.1-42.7-42.7s19.1-42.7 42.7-42.7h213.3c23.6 0 42.7 19.1 42.7 42.7S642.2 128 618.7 128zM405.3 725.3c-23.6 0-42.7-19.1-42.7-42.7v-256c0-23.6 19.1-42.7 42.7-42.7S448 403 448 426.6v256c0 23.6-19.1 42.7-42.7 42.7zM618.7 725.3c-23.6 0-42.7-19.1-42.7-42.7v-256c0-23.6 19.1-42.7 42.7-42.7s42.7 19.1 42.7 42.7v256c-0.1 23.6-19.2 42.7-42.7 42.7z" fill="#5F6379"></path></g><g id="SVGRepo_iconCarrier"><path d="M779.5 1002.7h-535c-64.3 0-116.5-52.3-116.5-116.5V170.7h768v715.5c0 64.2-52.3 116.5-116.5 116.5zM213.3 256v630.1c0 17.2 14 31.2 31.2 31.2h534.9c17.2 0 31.2-14 31.2-31.2V256H213.3z" fill="#0452c8"></path><path d="M917.3 256H106.7C83.1 256 64 236.9 64 213.3s19.1-42.7 42.7-42.7h810.7c23.6 0 42.7 19.1 42.7 42.7S940.9 256 917.3 256zM618.7 128H405.3c-23.6 0-42.7-19.1-42.7-42.7s19.1-42.7 42.7-42.7h213.3c23.6 0 42.7 19.1 42.7 42.7S642.2 128 618.7 128zM405.3 725.3c-23.6 0-42.7-19.1-42.7-42.7v-256c0-23.6 19.1-42.7 42.7-42.7S448 403 448 426.6v256c0 23.6-19.1 42.7-42.7 42.7zM618.7 725.3c-23.6 0-42.7-19.1-42.7-42.7v-256c0-23.6 19.1-42.7 42.7-42.7s42.7 19.1 42.7 42.7v256c-0.1 23.6-19.2 42.7-42.7 42.7z" fill="#5F6379"></path></g></svg></a>
 		
 		
@@ -274,6 +285,7 @@ if (isset($_SESSION['username'])) {
 	</center>
 	<hr>
 	<input value="MODIFY " name="submit" type="submit">
+
 
 		</div>
 		
@@ -335,48 +347,28 @@ for (var i = 0; i < popups.length; i++) {
 
 
 </script>
-<script>
-  function openForm(formId) {
-    console.log(formId);
-    var formElement = document.getElementById("form_product_" + formId);
-    formElement.style.display = "block";
 
-
-    var closeForm = function(event) {
-      var targetElement = event.target; // Element that triggered the event
-
-      if (!targetElement.closest('#form_product_' + formId)) {
-        formElement.style.display = "none";
-        document.removeEventListener('click', closeForm);
-      }
-    };
-
-    setTimeout(function() {
-      document.addEventListener('click', closeForm);
-    }, 0);
-
-	
-  }
-
-</script>
-
+  
 	<script src="script.js"></script> 
 
 
 	<script>
   // Function to trigger file input when the image is clicked
-  function uploadImage(image_id) {
-    document.getElementById('imageInput_'+image_id).click();
+  function uploadImage() {
+
+    document.getElementById('imageInput').click();
   }
 
   // Function to preview the selected image before uploading
-  function previewImage(event, image_id) {
+  function previewImage(event) {
     const file = event.target.files[0];
     const reader = new FileReader();
 
     reader.onload = function() {
-      const imgElement = document.getElementById('uploadedImage_'+image_id);
+      const imgElement = document.getElementById('uploadedImage');
       imgElement.src = reader.result;
+	  console.log("im preview");
+
 	  
     }
 
@@ -427,61 +419,18 @@ fetch('delete.php', {
 </script>
 
 
-<script>
-// Get all forms with the class 'productForm'
-const productForms = document.querySelectorAll('.productFormall');
+<script src="modifyProduct.js"></script>
 
-productForms.forEach(form => {
-    form.addEventListener('submit', function(event) {
-		console.log("diiid u just callll me");
-        event.preventDefault(); // Prevent the default form submission
-
-        
-        const formData = new FormData(this);
-		const productId = this.getAttribute('data-product-id'); 
-
-        // Send form data to PHP script for processing
-        fetch(this.getAttribute('action'), {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                // Handle the response as needed
-                console.log(`Product  modified successfully`);
-				const tr = document.getElementById('tr_product_'+productId);
-                console.log(formData.get('image').name);
-				if(formData.get('image').name!=""){
-				if (tr.firstElementChild) {
-    tr.firstElementChild.innerHTML = '<img src="../../../product_images/'+formData.get('image').name+'" alt="" height="50px" width="50px">';
-}
-}
-console.log(formData.get('title'));
-tr.children[2].innerHTML= formData.get('title')  ;
-tr.children[3].innerHTML= formData.get('price')  ;
-tr.children[4].innerHTML= formData.get('category')  ;
-tr.children[5].innerHTML= formData.get('quantity')  ;
-if(formData.get('quantity')==0){
-	tr.setAttribute("class","red_row");
-}
-else{
-	tr.setAttribute("class","");
-}
-var formElement = document.getElementById("form_product_" + productId);
-    formElement.style.display = "none";
-document.getElementById("Product_modified").style.display = "block";
-setTimeout(function() {
-    document.getElementById("Product_modified").style.display = "none";
-}, 2000);
-
-            })
-            .catch(error => {
-                // Handle any errors that occurred during the fetch
-                console.error(`Error modifying product:`, error);
-            });
-    });
-});
-</script>
 
 <script src="priceFilter.js"></script>
+
+<form id="formElement"   class="productFormall" action="upload.php" method="POST" >
+
+	<div  class="form-popup" id="form_product">
+		</div>
+	</form>
+	<script src="https://kit.fontawesome.com/252cd960c7.js" crossorigin="anonymous"></script>
+
+
 </body>
 </html>

@@ -64,7 +64,7 @@ $data = "<table>
 </thead>";
 
 while ($row = mysqli_fetch_assoc($query)) {
-    $data .= "<tr";
+    $data .= "<tr id='tr_product_{$row['id']}'";
 
     if ($row['Quantity'] <= 0) {
         $data .= " class=\"red_row\"";
@@ -85,7 +85,7 @@ while ($row = mysqli_fetch_assoc($query)) {
    
    
     <td>
-    <a onclick=\"openForm('{$row['id']} ')\">
+    <a class='forModify' product-id='{$row['id']}')\">
             <svg viewBox=\"0 0 48 48\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">
                 <g id=\"SVGRepo_bgCarrier\" stroke-width=\"0\"></g>
                 <g id=\"SVGRepo_tracerCarrier\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></g>
