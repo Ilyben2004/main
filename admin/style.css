@@ -376,3 +376,57 @@ div.message span{
   color: #0149e2;
   background-color: #2b3a60;
 }
+div#menu table {
+  margin-left: 11%;
+ 
+}
+div#menu table td{
+  padding: 50px; 
+  cursor: pointer;
+
+}
+
+div#menu table td:hover{
+  color: rgba(235, 42, 93, 0.92);
+}
+div#menu table td.chosen{
+text-decoration: underline;
+color: rgba(252, 87, 131, 0.834);
+
+}
+
+div#stasContainer{
+  display: flex;
+  justify-content: center;
+  gap:40px;
+
+}
+div.charts{
+  width: 50%;
+  height: 360px;
+  border:solid rgba(192, 178, 178, 0.605) 1px ;
+ 
+}
+div#stasContainer div.charts input.searchInput {
+  width: 300px;
+  height: 30px;
+  margin-top: 2%;
+}
+div#stasContainer div.charts canvas{
+  margin-top: 6%;
+}
+div#stasContainer div.charts select{
+width: 40%;
+border: 1px solid black;
+margin-left: 1%;
+margin-top: 1%;
+}
+div.selects{
+  display: flex;
+  gap: 10px;
+}
+
+
+div#ProductsByCategorys{
+  padding-left:9%;
+}

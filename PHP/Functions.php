@@ -305,9 +305,196 @@ function GetAllStatusCommands(){
  }
 
 
+ function GetOneProductInfo($data){
+
+    $mysqli = connect();
+ 
+    $res = $mysqli->query("SELECT p.id AS product_id, p.title AS product_title, DATE_FORMAT(o.ordate, '%Y-%m') AS order_month, COALESCE(SUM(op.quantity), 0) AS total_sold FROM products p LEFT JOIN order_product op ON p.id = op.id_product LEFT JOIN orders o ON op.id_order = o.id WHERE (p.title = '$data' OR p.id='$data' )AND o.status = 'Completed' -- Filter completed orders 
+    GROUP BY product_id, order_month ORDER BY product_id, order_month;");
+
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+            $command_status[] = $row;
+        }
+    } else {
+        $command_status =$data;
+    }
+    return $command_status;
+ 
+ 
+ }
+ function GetOneCategoryInfo($data){
+
+    $mysqli = connect();
+ 
+    $res = $mysqli->query("SELECT c.id AS category_id, c.Category_name AS category_name, DATE_FORMAT(o.ordate, '%Y-%m') AS order_month, COALESCE(SUM(op.quantity), 0) AS total_sold FROM category c LEFT JOIN products p ON c.id = p.id_category LEFT JOIN order_product op ON p.id = op.id_product LEFT JOIN orders o ON op.id_order = o.id WHERE (c.Category_name = '$data' OR c.id = '$data') AND o.status = 'Completed' GROUP BY category_id, order_month ORDER BY category_id, order_month;");
+
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+            $command_status[] = $row;
+        }
+    } else {
+        $command_status =$data;
+    }
+    return $command_status;
+ 
+ 
+ }
+ 
+ 
+ function allProductChart($data,$genre){
+
+    $mysqli = connect();
+ $sql = "SELECT
+ p.id AS product_id,
+ p.title AS product_title,
+ p.PRIX AS product_price,
+
+ SUM(op.quantity) AS total_quantity_sold
+FROM
+ products p
+JOIN
+ order_product op ON p.id = op.id_product
+JOIN
+ orders o ON op.id_order = o.id
+WHERE
+ o.STATUS = 'Completed'
+ AND o.ordate >= CURDATE() - INTERVAL $data DAY
+GROUP BY
+ p.id;
+
+";
+
+if($genre!="All Genres"){
+    $sql = "SELECT
+ p.id AS product_id,
+ p.title AS product_title,
+ p.PRIX AS product_price,
+
+ SUM(op.quantity) AS total_quantity_sold
+FROM
+ products p
+JOIN
+ order_product op ON p.id = op.id_product
+JOIN
+ orders o ON op.id_order = o.id
+ JOIN 
+ users u ON u.id=id_user
+WHERE
+ o.STATUS = 'Completed'
+ AND o.ordate >= CURDATE() - INTERVAL $data DAY
+ AND u.genre='$genre'
+GROUP BY
+ p.id;
+
+";
+}
+
+    $res = $mysqli->query($sql);
+
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+            $command_status[] = $row;
+        }
+    } else {
+        $command_status =$data;
+    }
+    return $command_status;
+ 
+ 
+ }
+ function allCommandsChart($data,$genre){
+
+    $mysqli = connect();
+ $sql = "SELECT c.id AS category_id, c.Category_name AS category_name, SUM(op.quantity) AS total_quantity_sold FROM category c JOIN products p ON c.id = p.id_category JOIN order_product op ON p.id = op.id_product JOIN orders o ON op.id_order = o.id WHERE o.STATUS = 'Completed' AND o.ordate >= CURDATE() - INTERVAL $data DAY GROUP BY c.id;
+
+
+";
+
+if($genre!="All Genres"){
+    $sql = "SELECT c.id AS category_id, c.Category_name AS category_name, SUM(op.quantity) AS total_quantity_sold FROM category c JOIN products p ON c.id = p.id_category JOIN order_product op ON p.id = op.id_product JOIN orders o ON op.id_order = o.id JOIN users u ON u.id = o.id_user WHERE o.STATUS = 'Completed' AND o.ordate >= CURDATE() - INTERVAL $data DAY AND u.genre = '$genre' GROUP BY c.id;
+
+
+";
+}
+
+    $res = $mysqli->query($sql);
+
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+            $command_status[] = $row;
+        }
+    } else {
+        $command_status =$data;
+    }
+    return $command_status;
+ 
+ 
+ }
+
+
+ function ProductsByCategorysChart(){
+
+    $mysqli = connect();
+
+    $sql="SELECT c.Category_name, COUNT(p.id) as product_count FROM category c LEFT JOIN products p ON c.id = p.id_category GROUP BY c.Category_name, c.id ORDER BY c.category_name;";
+
+
+    $res = $mysqli->query($sql);
+
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+            $command_status[] = $row;
+        }
+    } else {
+        $command_status =3;
+    }
+    return $command_status;
+
+ }
+
+ function allProductsLikesChart($data,$genre){
+
+    $mysqli = connect();
+ $sql = "SELECT p.id, p.title, COUNT(l.idProduct) AS like_count FROM products p 
+ LEFT JOIN likedproducts l ON p.id = l.idProduct JOIN users u ON u.id=l.idUser 
+ WHERE p.id in (SELECT idProduct from likedproducts where dateLike >=CURDATE() - INTERVAL $data DAY) 
+  GROUP BY p.id, p.title;
+
+";
+
+if($genre!="All Genres"){
+    $sql = " SELECT p.id, p.title, COUNT(l.idProduct) AS like_count FROM products p
+     LEFT JOIN likedproducts l ON p.id = l.idProduct 
+     JOIN users u ON u.id=l.idUser
+      WHERE p.id in (SELECT idProduct from likedproducts where dateLike >=CURDATE() - INTERVAL $data DAY)
+       AND u.genre='$genre' 
+    GROUP BY p.id, p.title;
+
+";
+}
+
+    $res = $mysqli->query($sql);
+
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+            $command_status[] = $row;
+        }
+    } else {
+        $command_status =$data;
+    }
+    return $command_status;
+ 
+ 
+ }
+
+ //************************************************************************* */
+
+
  function addUserLikeProduct($idUser, $idProduct) {
     $conn = connect();
-    $sql = "INSERT INTO likedproducts (idUser, idProduct) VALUES ('$idUser', '$idProduct')";
+    $today = date("Y-m-d");
+    $sql = "INSERT INTO likedproducts (idUser, idProduct,dateLike) VALUES ('$idUser', '$idProduct','$today')";
 
     if ($conn->query($sql) === TRUE) {
         return true; // Insertion successful
