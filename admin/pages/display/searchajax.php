@@ -69,6 +69,14 @@ while ($row = mysqli_fetch_assoc($query)) {
     if ($row['Quantity'] <= 0) {
         $data .= " class=\"red_row\"";
     }
+    elseif($row['Quantity'] <= 20){
+        $data .= " class=\"orange_row\"";
+
+    }
+    elseif($row['Quantity'] <= 50){
+        $data .= " class=\"yellow_row\"";
+
+    }
     
     $data .= ">
     <td><img src=\"../../../product_images/{$row['image_file']}\" alt=\"\" height=\"50px\" width=\"50px\"></td>

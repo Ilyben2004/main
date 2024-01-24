@@ -179,6 +179,9 @@ ORDER BY
     while($row = $res->fetch_assoc()){
        $products[] = $row;
     }} 
+    else{
+        $products=0;
+    }
     return $products;
  }
 
@@ -252,10 +255,10 @@ function getAllCommandesInThisWeek(){
 
 function getAllUsers(){
     $mysqli = connect();
-   $res = $mysqli->query("SELECT u.*, COUNT(o.id) AS num_orders
-   FROM users u
-   LEFT JOIN orders o ON u.id = o.id_user
-   GROUP BY u.id;
+   $res = $mysqli->query("SELECT u.*, COUNT(o.id) AS num_orders, TIMESTAMPDIFF(YEAR, u.BornDate, CURDATE()) AS age
+    FROM users u 
+    LEFT JOIN orders o ON u.id = o.id_user GROUP BY u.id;
+
    ");
     
    if ($res->num_rows > 0){

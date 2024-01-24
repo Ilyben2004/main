@@ -9,6 +9,34 @@ $(document).ready(function(){
         data: { name: getName },
         success: function(response) {
              $("#showdata").html(response);
+             let sortingState  = "low";
+let sortingStateAge  = "low";
+document.getElementById('orderTd').addEventListener('click', function () {
+  if (sortingState !== "up") {
+      sortingState = "up";
+      console.log("iffffffffffff");
+      highToLow(4);
+      
+  } else {
+      sortingState = "low";
+      console.log("elssssssssse");
+      lowToHigh(4);
+  }
+  console.log("im inside");
+});
+document.getElementById('ageTd').addEventListener('click', function () {
+  if (sortingStateAge !== "up") {
+      sortingStateAge = "up";
+      console.log("iffffffffffff");
+      highToLow(5);
+      
+  } else {
+      sortingStateAge = "low";
+      console.log("elssssssssse");
+      lowToHigh(5);
+  }
+  console.log("im inside");
+});
         } 
       });
     });

@@ -52,12 +52,19 @@ document.addEventListener("DOMContentLoaded", function () {
          
 
               for (let item of response) {
-               
-                  out += `<tr  id="tr_product_${item.id}"`;
+                var clas = "normal";
+                if (item.Quantity <= 0) {
+               clas="red_row";
+                }
+                else if(item.Quantity <= 20){
+                  clas="orange_row";
+                }
+                else if(item.Quantity <= 50){
+                  clas="yellow_row";
+                }
+                  out += `<tr class="${clas}"  id="tr_product_${item.id}"`;
 
-if (item.Quantity <= 0) {
-  out += " class=\"red_row\"";
-}
+
 
 out += `>
   <td><img src="../../../product_images/${item.image_file}" alt="" height="50px" width="50px"></td>
