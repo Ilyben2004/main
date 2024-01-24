@@ -124,10 +124,9 @@ if (isset($_SESSION['username'])) {
 	
 	<table>
 		<tr>
-			<td class="chosen" >Products Statistiques </td>
-			<td>Ctegorys Statistiques </td>
-
-			<td>Users Statistiques </td>
+			<td disp="allchartsProducts" class="chosen" >Products Statistiques </td>
+			<td disp="categoryschart">Ctegorys Statistiques </td>
+			<td disp="userschart">Users Statistiques </td>
 
 		</tr>
 	</table>
@@ -228,9 +227,9 @@ if (isset($_SESSION['username'])) {
 	
 	</div>
 	<!-- ************************************************************************ PRODUCTS CHARTS END *****************************************************************************************-->
-<!-- ************************************************************************categorys CHARTS END *****************************************************************************************-->
-<div id="categoryschart">
-     <div id="stasContainer">
+<!-- ************************************************************************categorys CHARTS  *****************************************************************************************-->
+<div id="categoryschart"> 
+  <div id="stasContainer">
 
 	     <div class="charts">
 		 <center><div class="search">
@@ -240,13 +239,43 @@ if (isset($_SESSION['username'])) {
 			</label>
 		
 		</div></center>
-		<canvas id="CategorysChart">
+		<canvas id="CategorysCharts">
+         </canvas>
+         </div>
+
+
+         <div  class="charts">
+		   <div class="selects">
+	      <select id="AllCategorysChartSelectDate"  class="form-select" aria-label="Default select example">
+        <option value="7">Last 7 days</option>
+          <option value="30">Last Month</option>
+           <option value="180">Last 6 Months</option>
+          <option value="365">Last Year</option>
+                    <option value="100000">All Times</option>
+             </select>
+             <select id="AllCategorysChartSelectGenre"  class="form-select" aria-label="Default select example">
+               <option value="All Genres">All Genres</option>
+             <option value="male">Hommes</option>
+           <option value="female">Females</option>
+
+             </select>
+
+              </div>
+		 <canvas id="AllCategorysChart">
 </canvas>
 
-         </div>
-         <div  class="charts">
+          </div>
+ </div>
+
+<br>
+
+	  <!-- ***********************************************************8 -->
+
+ <div id="stasContainer">
+
+	     <div id="CategorysRadardiv" class="charts">
 		 <div class="selects">
-	<select id="allProductsLikesChartSelectDate"  class="form-select" aria-label="Default select example">
+	<select id="CategorysRadarSelectDate"  class="form-select" aria-label="Default select example">
   <option value="7">Last 7 days</option>
   <option value="30">Last Month</option>
   <option value="180">Last 6 Months</option>
@@ -254,32 +283,132 @@ if (isset($_SESSION['username'])) {
   <option value="100000">All Times</option>
 
 </select>
-<select id="allProductsLikesChartSelectGenre"  class="form-select" aria-label="Default select example">
-  <option value="All Genres">All Genres</option>
-  <option value="male">Hommes</option>
-  <option value="female">Females</option>
+</div>
+<center>
+		
+		<canvas id="CategorysRadar">
+</canvas>
+</center>
+
+         </div>
+
+
+         <div id="CategorysRadardiv"  class="charts">
+			 <div class="selects">
+	<select id="CategorysRadarLikeSelectDate"  class="form-select" aria-label="Default select example">
+  <option value="7">Last 7 days</option>
+  <option value="30">Last Month</option>
+  <option value="180">Last 6 Months</option>
+  <option value="365">Last Year</option>
+  <option value="100000">All Times</option>
 
 </select>
 
-    </div>
-		 <canvas id="AllCategorysChart">
+</div>
+		
+		 <center>
+		
+		<canvas id="CategorysRadarLike">
 </canvas>
-
+</center>
           </div>
+		  
       </div>
 	  <script src="categorysFilter.js"></script>
 
 </div>
 		<!-- ************************************************************************ categorys CHARTS END *****************************************************************************************-->
+		<!-- ************************************************************************ users CHARTS  *****************************************************************************************-->
+
+  <div id="userschart">
+     <div id="stasContainer">
+	       <div class="charts">
+		   <center><div class="search">
+		<label for="search">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>
+				<input id="userInput" class="searchInput" type="text" placeholder="Id or Title" id="search">
+			</label>
+		
+		</div></center>
+		<canvas id="usersChart">
+         </canvas>
+           </div>
+
+
+		  <div class="charts">
+		  <div class="selects">
+	<select id="AllusersChartSelectDate"  class="form-select" aria-label="Default select example">
+  <option value="7">Last 7 days</option>
+  <option value="30">Last Month</option>
+  <option value="180">Last 6 Months</option>
+  <option value="365">Last Year</option>
+  <option value="100000">All Times</option>
+
+</select>
+<select id="AllusersChartSelectGenre"  class="form-select" aria-label="Default select example">
+               <option value="All Genres">All Genres</option>
+             <option value="male">Hommes</option>
+           <option value="female">Females</option>
+
+             </select>
+</div>
+		      <canvas id="AllusersChart"></canvas>
+        </div>
+      </div>
+	  <script src="usersFilter.js"></script>
+
+ </div>
+
+
+
+ <!-- ***********************************88 notifications div ---------------------------------------------->
+
+<div id="notificationsPopup" class="popup" ></div>
+
+
+
+<div id="Noinfos"  ><div id="content">
+	<center>
+	<svg hieght="150" width="150" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" stroke-width="3" stroke="#F38787" fill="none"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><polyline points="34.48 54.28 11.06 54.28 11.06 18.61 23.02 5.75 48.67 5.75 48.67 39.42"></polyline><polyline points="23.04 5.75 23.02 18.61 11.06 18.61"></polyline><line x1="16.21" y1="45.68" x2="28.22" y2="45.68"></line><line x1="16.21" y1="39.15" x2="31.22" y2="39.15"></line><line x1="16.21" y1="33.05" x2="43.22" y2="33.05"></line><line x1="16.21" y1="26.95" x2="43.22" y2="26.95"></line><circle cx="42.92" cy="48.24" r="10.01" stroke-linecap="round"></circle><line x1="39.05" y1="44.36" x2="46.8" y2="52.11"></line><line x1="39.05" y1="52.11" x2="46.8" y2="44.36"></line></g></svg>
+<br>
+There is no Informations About this id or title
+</center>
+</div>
+</div>
 
 
 	</main>
 </div>
 
 
+
+
 <script src="notification.js"></script>
 <script src="handletd.js" ></script>
 
 
+
+<div id="containerloading">
+<div class="loader">
+	<div class="loader-inner">
+		<div class="loader-line-wrap">
+			<div class="loader-line"></div>
+		</div>
+		<div class="loader-line-wrap">
+			<div class="loader-line"></div>
+		</div>
+		<div class="loader-line-wrap">
+			<div class="loader-line"></div>
+		</div>
+		<div class="loader-line-wrap">
+			<div class="loader-line"></div>
+		</div>
+		<div class="loader-line-wrap">
+			<div class="loader-line"></div>
+		</div>
+	</div>
+</div>
+
+</div>
 </body>
 </html>

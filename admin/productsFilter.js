@@ -1,84 +1,96 @@
 
-function searchChart(label , dataa){
-    var ctx = document.getElementById('searchChartProduct').getContext('2d');
-console.log(label);
-console.log(dataa);
-const labels = label;
-const data = {
-    labels: labels,
-    datasets: [{
-        label: 'How Many Sells',
-        data: dataa,
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 1
-    }]
-};
+function noReasultsDiv() {
+  var myDiv = document.getElementById('Noinfos');
 
-const config = {
-    type: 'line',
-    data: data,
-};
+  // Display the div
+  myDiv.style.display = 'block';
 
-// Create a new instance of the Chart class
-var myChart = new Chart(ctx, config);
-return myChart;
-
-
+  // Set a timeout to hide the div after 3 seconds
+  setTimeout(function () {
+      myDiv.style.display = 'none';
+  }, 3000);
 }
+
 function destroyChart(chartInstance) {
-    if (chartInstance) {
-        chartInstance.destroy();
-    }
+  if (chartInstance) {
+      chartInstance.destroy();
+  }
+}
+function searchChart(label, dataa) {
+  var ctx = document.getElementById('searchChartProduct').getContext('2d');
+  console.log(label);
+  console.log(dataa);
+  const labels = label;
+  const data = {
+      labels: labels,
+      datasets: [{
+          label: 'How Many Sells',
+          data: dataa,
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 1
+      }]
+  };
+
+  const config = {
+      type: 'line',
+      data: data,
+  };
+
+  // Destroy the existing chart if it exists
+  if (window.myChartInstance) {
+      window.myChartInstance.destroy();
+  }
+
+  // Create a new instance of the Chart class
+  window.myChartInstance = new Chart(ctx, config);
+  return window.myChartInstance;
 }
 
+var mycharthh = searchChart([], []);
 
 
-myChartInstance =  searchChart([],[]);
+document.getElementById('oneInput').addEventListener('keydown', function (event) {
+  if (event.keyCode === 13) {
+      const data = this.value;
+      $.ajax({
+          url: 'phpGetData/OneProduct.php',
+          type: 'GET',
+          data: { data: data },
+          success: function (response) {
+              console.log(response);
 
+              if (response != 0) {
+                  var label = [];
+                  var dataa = [];
 
-document.getElementById('oneInput').addEventListener('keydown',function(event){
-    if (event.keyCode === 13) {
-        const data = this.value;
-        $.ajax({
-            url: 'phpGetData/OneProduct.php',  // Your PHP script
-            type: 'GET',
-            data: { data: data },  // Data to send to PHP
-            success: function(response) {
-                // Handle the response from PHP
-                console.log(response);
-        
-                if (response != 0) {
-                    var label = [];
-                    var dataa = [];
-      
-        var phpData = JSON.parse(response);
-        console.log(phpData.length);
+                  var phpData = JSON.parse(response);
+                  console.log(phpData.length);
+                  if(phpData==data){
+                   
+                      noReasultsDiv();
+                    
+                  }
 
-                    for (var i = 0; i < phpData.length; i++) {
+                  for (var i = 0; i < phpData.length; i++) {
+                      label[i] = phpData[i].order_month;
+                      dataa[i] = phpData[i].total_sold;
+                  }
 
-                        label[i] =phpData[i].order_month;
-                        dataa[i] =phpData[i].total_sold;
-                    }
-        
-                    console.log(label);
-                    console.log(dataa);
-                    destroyChart(myChartInstance);
+                  console.log(label);
+                  console.log(dataa);
 
-                  
-        
-        
-                    myChartInstance = searchChart(label, dataa);
-                }
-            },
-            error: function(error) {
-                // Handle errors
-                console.error(error);
-            }
-        });
-        
-    }
-})
+                  // Call searchChart function
+                  destroyChart(mycharthh);
+                  searchChart(label, dataa);
+              }
+          },
+          error: function (error) {
+              console.error(error);
+          }
+      });
+  }
+});
 
 
 
@@ -102,11 +114,11 @@ const data = {
     data:dataa,
     backgroundColor: [
      
-      'rgba(255, 205, 86, 0.2)',
+      'rgba(75, 192, 192,0.2)',
     
     ],
     borderColor: [
-      'rgb(255, 99, 132)'
+      'rgba(75, 192, 192)',
     
     ],
     borderWidth: 1
@@ -200,7 +212,7 @@ const data = {
     
     ],
     borderColor: [
-      'rgb(255, 99, 132)'
+      'rgba(75, 192, 192)',
     
     ],
     borderWidth: 1
@@ -291,12 +303,14 @@ function ProductsByCategorysChart(aLabel,dataa){
           label: 'How Many Products By Category',
           data: dataa,
           fill: true,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgb(255, 99, 132)',
-          pointBackgroundColor: 'rgb(255, 99, 132)',
+          backgroundColor:           'rgba(75, 192, 192,0.2)',
+
+          borderColor:           'rgba(75, 192, 192)',
+
+          pointBackgroundColor: 'rgba(75, 192, 192)',
           pointBorderColor: '#fff',
           pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgb(255, 99, 132)'
+          pointHoverBorderColor: 'rgba(75, 192, 192)',
         }]
       };
 

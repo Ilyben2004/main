@@ -13,7 +13,7 @@ function connect(){
 
 function get_all_cate(){
    $mysqli = connect();
-   $res = $mysqli->query("select * from category ");
+   $res = $mysqli->query("select * from category  ");
    if ($res->num_rows > 0){
    while($row = $res->fetch_assoc()){
       $cate[] = $row;
@@ -624,6 +624,165 @@ function insertNotification($message, $type) {
 
     $conn->close();
 }
+
+
+
+//***********************88 category filter functions */
+function GetRadarCategory($data,$genre){
+
+    $mysqli = connect();
+ $sql = "SELECT
+ c.id AS category_id,
+ c.Category_name AS category_name,
+ SUM(op.quantity) AS total_quantity_sold
+FROM
+ category c
+JOIN
+ products p ON c.id = p.id_category
+JOIN
+ order_product op ON p.id = op.id_product
+JOIN
+ orders o ON op.id_order = o.id
+ JOIN 
+ users u on u.id=o.id_user
+ 
+WHERE
+ o.STATUS = 'Completed'
+ AND  o.ordate >= CURDATE() - INTERVAL $data  DAY
+ AND  u.genre='$genre'
+GROUP BY
+ c.id, c.Category_name
+ ORDER BY 
+ c.id;
+
+
+";
+    $res = $mysqli->query($sql);
+
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+            $command_status[] = $row;
+        }
+    } else {
+        $command_status =$data;
+    }
+    return $command_status;
+ }
+
+
+ function GetRadarCategoryLike($data,$genre){
+
+    $mysqli = connect();
+ $sql = "SELECT 
+ c.id AS category_id, 
+ c.category_name AS category_name, 
+ COUNT(lp.idProduct) AS total_like 
+FROM 
+ category c
+JOIN 
+ products p ON c.id = p.id_category
+JOIN 
+ likedproducts lp ON lp.idProduct = p.id
+JOIN 
+ users u ON u.id = lp.idUser
+WHERE 
+ lp.dateLike >= CURDATE() - INTERVAL $data DAY
+ AND u.genre = '$genre'
+GROUP BY 
+ c.id, c.category_name
+ORDER BY 
+ c.id;
+
+
+";
+    $res = $mysqli->query($sql);
+
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+            $command_status[] = $row;
+        }
+    } else {
+        $command_status =$data;
+    }
+    return $command_status;
+ }
+
+
+
+
+
+
+//******************************************************** */
+//********************************************************* Users Charts Functions  ***************************************************************/
+function GetOneUserSells($data){
+
+    $mysqli = connect();
+ $sql = "SELECT
+ u.id AS user_id,
+ u.username,
+ o.ordate,
+ COUNT(o.id) AS total_orders
+FROM
+ users u
+JOIN
+ orders o ON u.id = o.id_user
+WHERE
+ u.username = '$data' OR u.id = '$data'
+GROUP BY
+ u.id, u.username, o.ordate
+ORDER BY
+ o.ordate;
+
+
+
+";
+    $res = $mysqli->query($sql);
+
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+            $command_status[] = $row;
+        }
+    } else {
+        $command_status =$data;
+    }
+    return $command_status;
+ }
+
+ function getNewUsers($data,$genre){
+
+    $mysqli = connect();
+ $sql = "SELECT SignUpDate, COUNT(id) AS how_many_users
+ FROM users
+ WHERE SignUpDate >= CURDATE() - INTERVAL $data DAY
+ GROUP BY SignUpDate;
+ 
+
+";
+
+if($genre!="All Genres"){
+    $sql = " SELECT SignUpDate, COUNT(id) AS how_many_users
+    FROM users
+    WHERE SignUpDate >= CURDATE() - INTERVAL $data DAY
+    AND genre='$genre'
+    GROUP BY SignUpDate;
+    
+
+";
+}
+
+    $res = $mysqli->query($sql);
+
+    if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+            $command_status[] = $row;
+        }
+    } else {
+        $command_status =$data;
+    }
+    return $command_status;
+ 
+ 
+ }
 
 ?>
 
