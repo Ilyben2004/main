@@ -187,6 +187,7 @@ if (isset($_SESSION['username'])) {
 
 	<thead>
 	<tr>
+		<td><div id="firstTdCn"><input type="checkbox" name="" id=""><div id="iconContiner"><i class="fa-solid fa-trash-can"></i></div></div></td>
 		<td>Image Product</td>
 		<td>id</td>
 		<td>Title</td>
@@ -222,8 +223,10 @@ if (isset($_SESSION['username'])) {
 
 	<tr id="tr_product_<?php echo $product['id'];  ?>"  class="<?php echo $class ;?>">
 		
-	
+	<td><input type="checkbox"></td>
+
 		<td><img src="..\..\..\product_images\<?php echo $product['image_file']; ?>" alt="" height="50px" width="50px"></td>
+
 		<td><?php echo $product['id'] ; ?></td>
 
 		<td><?php echo $product['title'] ; ?></td>

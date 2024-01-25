@@ -220,8 +220,12 @@ GROUP BY p.id_user;
         <div id="signupAlert" class="alert alert-warning" role="alert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 5px; width: 600px; text-align: center; z-index: 1000;">
                     You need to sign up to add items to your cart. Please <b>sign up first.</b>
         </div>
+        
     <?php endif; ?>
     </header>
+    <div id="ProductsinCartAlert" class="alert alert-warning" role="alert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 5px; width: 600px; text-align: center; z-index: 1000;">
+                   This Product is Already in Your Cart
+        </div>
     <!-- ======================================================================= -->  
     <div id="editProfileSection" class="container rounded bg-white mt-5" style="display: none;">
     <div class="row">

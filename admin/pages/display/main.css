@@ -38,6 +38,7 @@ table {
   th,
   td {
     padding: 20px;
+    
   }
   tr {
     background-color: white;
@@ -275,14 +276,20 @@ textarea{
   opacity: 0.4;
   cursor: pointer;
 }
+tr td:nth-child(1){
+  width: 10%;
 
-tr td:nth-child(3){
-  width: 25%;
-}
-tr td:nth-child(5){
-  width: 20%;
 }
 tr td:nth-child(2){
+  width: 10%;
+}
+tr td:nth-child(4){
+  width: 20%;
+}
+tr td:nth-child(6){
+  width: 15%;
+}
+tr td:nth-child(3){
   padding-left: 2.9%;
 }
 
@@ -415,4 +422,29 @@ height: 150px;
   }
   #form_product div.iconClose{
     background-color: black;
+  }
+  td input {
+   
+    height: 30px;
+    width: 30px;
+  }
+  div#firstTdCn{
+    display: flex;
+  }
+
+  td div#iconContiner {
+   
+    
+    cursor: pointer;
+    font-size: 30px;
+    margin-left: 20%;
+    margin-top: -10%;
+  
+
+  }
+
+
+  td div#iconContiner:hover{
+    color: rgba(231, 84, 84, 0.934);
+    
   }

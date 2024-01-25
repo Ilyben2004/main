@@ -264,7 +264,9 @@ GROUP BY p.id_user;
 
 
     <!-- ================================footer========================================================================== -->
-    
+    <div id="ProductsinCartAlert" class="alert alert-warning" role="alert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 5px; width: 600px; text-align: center; z-index: 1000;">
+                   This Product is Already in Your Cart
+        </div>
     <!-- Footer -->
   <footer class="text-center text-lg-start bg-body-tertiary text-muted">
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">

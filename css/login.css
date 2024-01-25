@@ -19,3 +19,9 @@ body {
 
   }
   
+  select#genreSelect{
+    width: 100%;
+    height: 40px;
+    border:rgba(240, 218, 218, 0.822) 1px solid ;
+    border-radius: 4%;
+  }

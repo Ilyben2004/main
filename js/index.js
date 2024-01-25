@@ -34,27 +34,45 @@ document.addEventListener('DOMContentLoaded', function () {
         cartPriceElement.innerText = currentTotalPrice.toFixed(2) + ' MAD';
     }
 
-    
-    
-    $('.addToCartButton').on('click', function () {
-        var productId = $(this).data('product-id');
-        console.log(productId);
-        var userId = $(this).data('user-id'); 
-        console.log(userId);
-        if(!isNaN(userId)){
+
+    function checkifProductExistInPanier(indiceUser,indiceProduct){
         $.ajax({
-            url: 'php/update_cart.php',
+            url: 'php/checkProductPanier.php',
             method: 'POST',
-            data: { user_id: userId, product_id: productId, quantity: 1 },
-            success: function () {
-                console.log('Product added to cart successfully');
-                console.log(userId);
+            data: { user_id: indiceUser,product_id : indiceProduct },
+            success: function (response) {
+                console.log("**********************888 "+response);
+                if(response==1){
+                    console.log("exist");
+                    return false;
+                }
+                else{
+                    console.log("not exist");
+                    return true;
+
+
+                }
+              
             },
             error: function (error) {
-                console.error('Error adding product to cart:', error);
+                console.error('Error checking product:', error);
             }
-        });}
-    });        
+        });
+
+
+    }
+
+    
+      function showalertProductInPanier(){
+        console.log("******************&7*************");
+        var ProductsinCartAlert = document.getElementById('ProductsinCartAlert');
+        ProductsinCartAlert.style.display='block';
+        setTimeout(function () {
+            ProductsinCartAlert.style.display='none';
+
+        }, 2000);
+
+      }
     
     function attachAddToCartListeners() {
         var addToCartButtons = document.querySelectorAll('.addToCartButton');
@@ -64,7 +82,30 @@ document.addEventListener('DOMContentLoaded', function () {
             button.addEventListener('click', function () {
                 var productPrice = parseFloat(button.closest('.card').getAttribute('data-price'));
                 var productId = button.closest('.card').getAttribute('data-product-id');
+                var userId = $(this).data('user-id'); 
+
+            if(checkifProductExistInPanier(userId,productId)){
                 updateCart(productPrice, productId);
+
+              
+                console.log(userId);
+                if(!isNaN(userId)){
+                $.ajax({
+                    url: 'php/update_cart.php',
+                    method: 'POST',
+                    data: { user_id: userId, product_id: productId, quantity: 1 },
+                    success: function () {
+                        console.log('Product added to cart successfully');
+                        console.log(userId);
+                    },
+                    error: function (error) {
+                        console.error('Error adding product to cart:', error);
+                    }
+                });}}
+                else{
+                    showalertProductInPanier();
+                  
+                }
             });
         });
 
@@ -74,29 +115,38 @@ document.addEventListener('DOMContentLoaded', function () {
             button.addEventListener('click', function () {
                 var productId = parseFloat(button.getAttribute('data-product-id'));
                 var productPrice = parseFloat(button.getAttribute('data-price'));
+                var userId = $(this).data('user-id');
+                if(checkifProductExistInPanier(userId,productId)){ 
+
                 updateCart(productPrice, productId);
+
+
+
+                
+                    console.log(productId);
+                    console.log(userId);
+                    if(!isNaN(userId)){
+                    $.ajax({
+                        url: 'php/update_cart.php',
+                        method: 'POST',
+                        data: { user_id: userId, product_id: productId, quantity: 1 },
+                        success: function () {
+                            console.log('Product added to cart successfully');
+                        },
+                        error: function (error) {
+                            console.error('Error adding product to cart:', error);
+                        }
+                    });}}
+                    else{
+                        showalertProductInPanier();
+                    }
+               
+                
            });
         
         });
     }
-    $('.buyNowButton').on('click', function () {
-        var productId = $(this).data('product-id');
-        console.log(productId);
-        var userId = $(this).data('user-id'); 
-        console.log(userId);
-        if(!isNaN(userId)){
-        $.ajax({
-            url: 'php/update_cart.php',
-            method: 'POST',
-            data: { user_id: userId, product_id: productId, quantity: 1 },
-            success: function () {
-                console.log('Product added to cart successfully');
-            },
-            error: function (error) {
-                console.error('Error adding product to cart:', error);
-            }
-        });}
-    });
+  
 function decrementQuantity(productId) {
     updateQuantity(productId, -1);
 }

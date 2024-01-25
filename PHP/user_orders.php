@@ -47,7 +47,7 @@ if ($result->num_rows > 0) {
             $confirmationMessage = "Are you sure you want to cancel this order?";
             $action = '<button class="btn btn-danger" onclick="showConfirmationDialog(\'Are you sure you want to cancel this order?\', ' . $row["id"] . ');">Cancel Order</button>';
         } else {
-            $action = '<button class="btn btn-warning" onclick="showFeedbackModal()">Your Feedback</button>';
+            $action = '';
             $orderId = $row['id'];
             $updateOrder = "UPDATE orders SET STATUS ='Completed' WHERE id= '$orderId'";
             $r = $conn->query($updateOrder);

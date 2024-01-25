@@ -23,12 +23,20 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['FN']
     $firstName = $_POST['FN'];
     $lastName = $_POST['LN'];
     $email = $_POST['EMAIL'];
+    $genre = $_POST['genre'];
+    $birthDate = $_POST['borndate'];
+    $todayDate = date("Y-m-d");
+    $dateTime = new DateTime($birthDate);
 
-    $sql = "INSERT INTO users (FN, LN, USERNAME, EMAIL, PASSWORD_USER) VALUES (?, ?, ?, ?, ?)";
+// Format the date as "YYYY-MM-DD"
+$borndate = $dateTime->format('Y-m-d');
+
+
+    $sql = "INSERT INTO users (FN, LN, USERNAME, EMAIL, PASSWORD_USER,genre,SignUpDate,BornDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
 
     if ($stmt) {
-        $stmt->bind_param("sssss", $firstName, $lastName, $username, $email, $password);
+        $stmt->bind_param("ssssssss", $firstName, $lastName, $username, $email, $password,$genre,$todayDate,$birthDate);
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
@@ -91,6 +99,16 @@ if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['FN']
               </div>
               <div class="form-floating mb-3">
                 <input type="password" class="form-control"  name="password" placeholder="Password" id="floatingPassword" style="padding:10px;">
+              </div>
+              <div class="form-floating mb-3">
+              <select name="genre" id="genreSelect" class="form-select" aria-label="Default select example">
+               
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+               </select>
+              </div>
+              <div class="form-floating mb-3">
+              <input type="date" class="form-control" name="borndate"  style="padding: 10px;">
               </div>
               <div class="form-floating mb-3">
                     <a href="login.php" class="link" style="text-decoration: none;text-align: center; color:royalblue">YOU HAVE ALREADY AN ACCOUNT</a>
