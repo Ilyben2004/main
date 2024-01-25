@@ -786,6 +786,25 @@ if($genre!="All Genres"){
  
  
  }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+function categoryContainsProducts($Category){
+    $idCate =getidbycate($Category);
+    $mysqli = connect();
+    $res = $mysqli->query("SELECT 
+   *
+ FROM 
+    products p
+ WHERE id_category='$idCate'
+ ");
+    if ($res->num_rows > 0){
+        return 1;
+   }
+   else{
+    $sql = "DELETE FROM category WHERE Category_name  = '$Category'";
+    $mysqli->query($sql);
+   }
+   
+    return 0;
+}
 ?>
 
