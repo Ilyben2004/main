@@ -221,3 +221,17 @@ font-size: 20px;
 }
 
 
+#myform{
+  margin-left:30%;
+
+}
+#myform input[type='text']{
+  height: 40px;
+  border-radius: 1%;
+
+}#myform button:hover{
+  background-color: rgb(5, 88, 5);
+
+  
+
+}

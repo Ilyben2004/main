@@ -47,10 +47,10 @@ document.getElementById('priceFilter').addEventListener('change',function(){
     document.getElementById('likesfilter').value=0;
 
 if(this.value==1){
-    highToLow(3);
+    highToLow(4);
 }
 else{
-    lowToHigh(3);
+    lowToHigh(4);
 }
 })
 
@@ -61,10 +61,10 @@ document.getElementById('sellsfilter').addEventListener('change',function(){
     document.getElementById('likesfilter').value=0;
 
     if(this.value==1){
-        highToLow(6);
+        highToLow(7);
     }
     else{
-        lowToHigh(6);
+        lowToHigh(7);
     }
     })
 
@@ -73,10 +73,10 @@ document.getElementById('sellsfilter').addEventListener('change',function(){
         document.getElementById('sellsfilter').value=0;
 
         if(this.value==1){
-            highToLow(7);
+            highToLow(8);
         }
         else{
-            lowToHigh(7);
+            lowToHigh(8);
         }
         })
         

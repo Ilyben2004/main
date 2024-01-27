@@ -90,14 +90,14 @@
                                     console.log(formData.get('image').name);
                                     if(formData.get('image').name!=""){
                                     if (tr.firstElementChild) {
-                        tr.firstElementChild.innerHTML = '<img src="../../../product_images/'+formData.get('image').name+'" alt="" height="50px" width="50px">';
+                        tr.children[1].innerHTML = '<img src="../../../product_images/'+formData.get('image').name+'" alt="" height="50px" width="50px">';
                     }
                     }
                     console.log(formData.get('title'));
-                    tr.children[2].innerHTML= formData.get('title')  ;
-                    tr.children[3].innerHTML= formData.get('price')  ;
-                    tr.children[4].innerHTML= formData.get('category')  ;
-                    tr.children[5].innerHTML= formData.get('quantity')  ;
+                    tr.children[3].innerHTML= formData.get('title')  ;
+                    tr.children[4].innerHTML= formData.get('price')  ;
+                    tr.children[5].innerHTML= formData.get('category')  ;
+                    tr.children[6].innerHTML= formData.get('quantity')  ;
                     if(formData.get('quantity')==0){
                         tr.setAttribute("class","red_row");
                     }

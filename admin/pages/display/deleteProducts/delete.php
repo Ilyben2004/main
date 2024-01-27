@@ -1,5 +1,5 @@
 <?php
-require '../../../PHP/Functions.php';
+require '../../../../PHP/Functions.php';
 
 $connection = connect();
 

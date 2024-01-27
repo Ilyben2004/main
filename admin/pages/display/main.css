@@ -300,19 +300,31 @@ tr td:last-child{
 
 
 #delete_confirmation{
-  height: 300px;
+  height: 170px;
   line-height: 50px;
+  font-size: 15px;
+  width: 500px;
+  
   
   
 }
 
 #delete_confirmation button{
- height: 40px;
+  font-size: 10px;
+
+ height:45px;
  width:90px;
- margin-left: 4%;
- margin-top: 4%;
   
 }
+#delete_confirmation div.buttons{
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  
+  
+}
+
+
 #delete_confirmation button:first-of-type{
   background-color: rgba(249, 77, 77, 0.658);
 

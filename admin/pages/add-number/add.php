@@ -109,21 +109,18 @@
    
   
 <!--you can type here-->
-<center>
 
 
 
   
 <form id="myform" action="upload.php"  enctype="multipart/form-data">
         <div   class="profile-form">
-            <center>
-                
+	
              
                 
                 <label for="profileImage">Image Product : </label>
                 <input class="image-upload" type="file" id="profileImage" name="profileImage" accept="image/*">
-                
-                <label for="firstName">Title : </label>
+				  <label for="firstName">Title : </label>
                 <input type="text" id="firstName" name="title" placeholder="Please enter the title of this product">
                 
                 <label for="lastName">Descreption : </label>
@@ -154,14 +151,14 @@
 </select><i id="deleteCategory" class="fa-solid fa-trash"></i>
 <hr>
                 <br>
+			<center>
                 <button type="button" onclick="uploadProduct()">Add this Product</button>
 
-            </center>
+					</center>
         </div>
     </form>
    
 
-    </center>
 
 </div>
 
