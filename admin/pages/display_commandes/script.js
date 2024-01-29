@@ -15,4 +15,3 @@
   let adjustedHeight = numericHeight + 85;
   
   // Set the height of the target div with the adjusted height
-  

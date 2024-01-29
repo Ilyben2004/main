@@ -18,7 +18,7 @@ else{
 }
 
 
-$all_products_query = "SELECT * FROM products";
+$all_products_query = "SELECT * FROM products WHERE Quantity>0";
 $result = mysqli_query(db(), $all_products_query);
 
 $count = 0;

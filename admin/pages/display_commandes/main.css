@@ -34,9 +34,7 @@ table {
   td svg , td span {
     vertical-align: middle;
   }
-  tr {
-    background-color: #D6EEEE;
-  }
+ 
   thead{
     background-color: #D6EEEE;
    font-weight: bolder;
@@ -345,3 +343,10 @@ hr.style-two {
   border-radius: 10%;
 }
 
+.card{
+  cursor: pointer;
+}
+
+td:first-child{
+  width: 5%;
+}

@@ -806,5 +806,24 @@ function categoryContainsProducts($Category){
    
     return 0;
 }
+
+
+
+
+function getOneUser($idUser) {
+    $mysqli = connect();
+    $res = $mysqli->query("SELECT *
+                          FROM users u 
+                          WHERE id=$idUser");
+
+    if ($res->num_rows > 0) {
+        $user = $res->fetch_assoc();
+    } else {
+        $user = null; 
+    }
+
+    return $user;
+}
+
 ?>
 

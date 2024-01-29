@@ -166,12 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                       </div>
                       <div class="cart_content">
                         <div class="cart_text"><a href="cart.php">Cart</a></div>
-                        <div class="cart_price"><span id="cartPrice"><?php echo executeSingleValueQuery("SELECT FORMAT(ROUND(SUM(p.quantity * pr.PRIX), 2), 2) AS total_price
-FROM panier p
-JOIN products pr ON p.id_product = pr.id
-GROUP BY p.id_user;
-
-"); ?></span> MAD</div>
+                      
                       </div>
                     </div>
                   </div>
@@ -238,6 +233,9 @@ GROUP BY p.id_user;
                 <span class="text-black-50" style="margin-top: 15px;"><h6><?php echo $email ?></h6></span>
             </div>
         </div>
+        <?php 
+        $userInfo = getOneUser($userId);
+        ?>
         <div class="col-md-8">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -252,28 +250,28 @@ GROUP BY p.id_user;
                 <form id="editProfileForm" method="POST" action="./php/edit_profile.php">
           <div class="row mt-2">
         <div class="col-md-6">
-            <input type="text" name="newFirstName" class="form-control" placeholder="Enter new first name" value="">
+            <input type="text" name="newFirstName" class="form-control" value="<?php echo $userInfo['FN'] ?>">
         </div>
         <div class="col-md-6">
-            <input type="text" name="newLastName" class="form-control" placeholder="Enter new last name" value="">
+            <input type="text" name="newLastName" class="form-control" value="<?php echo $userInfo['LN'] ?>" >
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-6">
 
-            <input type="text" name="newUsername" class="form-control" placeholder="Enter new username" value="">
+            <input type="text" name="newUsername" class="form-control" value="<?php echo $userInfo['USERNAME'] ?>" >
         </div>
         <div class="col-md-6">
 
-            <input type="text" name="newEmail" class="form-control" placeholder="Enter new email" value="">
+            <input type="text" name="newEmail" class="form-control" value="<?php echo $userInfo['EMAIL'] ?>" >
         </div>
     </div>
     <div class="row mt-3">
         <div class="col-md-6">
-            <input type="password" name="newPassword" class="form-control" placeholder="Enter new password" value="">
+            <input type="password" name="newPassword" class="form-control" value="<?php echo $userInfo['PASSWORD_USER'] ?>" >
         </div>
         <div class="col-md-6">
-            <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm new password" value="">
+            <input type="password" name="confirmPassword" class="form-control" value="<?php echo $userInfo['PASSWORD_USER'] ?>">
         </div>
     </div>
     

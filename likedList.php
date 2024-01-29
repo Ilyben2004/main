@@ -148,12 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                       </div>
                       <div class="cart_content">
                         <div class="cart_text"><a href="cart.php">Cart</a></div>
-                        <div class="cart_price"><span id="cartPrice"><?php echo executeSingleValueQuery("SELECT FORMAT(ROUND(SUM(p.quantity * pr.PRIX), 2), 2) AS total_price
-FROM panier p
-JOIN products pr ON p.id_product = pr.id
-GROUP BY p.id_user;
-
-"); ?></span> MAD</div>
+                       
                       </div>
                     </div>
                   </div>

@@ -140,4 +140,5 @@ select{
 
 #orderTd,#ageTd{
   cursor: pointer;
+  text-decoration: underline;
 }

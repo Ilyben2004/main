@@ -124,25 +124,25 @@ if (isset($_SESSION['username'])) {
 	
 	
        
-        <div class="card">
+        <div status='Pending' class="card">
           <i ><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12ZM3.00683 12C3.00683 16.9668 7.03321 20.9932 12 20.9932C16.9668 20.9932 20.9932 16.9668 20.9932 12C20.9932 7.03321 16.9668 3.00683 12 3.00683C7.03321 3.00683 3.00683 7.03321 3.00683 12Z" fill="#0F0F0F"></path> <path d="M12 5C11.4477 5 11 5.44771 11 6V12.4667C11 12.4667 11 12.7274 11.1267 12.9235C11.2115 13.0898 11.3437 13.2343 11.5174 13.3346L16.1372 16.0019C16.6155 16.278 17.2271 16.1141 17.5032 15.6358C17.7793 15.1575 17.6155 14.5459 17.1372 14.2698L13 11.8812V6C13 5.44772 12.5523 5 12 5Z" fill="#0F0F0F"></path> </g></svg></i>
           <h3>Pending Orders</h3>
 		  <p> <?php echo executeSingleValueQuery("SELECT COUNT(*) from orders where status='Pending'"); ?> orders :  <?php echo executeSingleValueQuery("SELECT (COUNT(CASE WHEN status = 'Pending' THEN 1 END) / COUNT(*)) * 100 AS percentage FROM orders
 "); ?>%</p> 
         </div>
-        <div class="card">
+        <div status='Delevring' class="card">
           <i ><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M1 6C1 4.89543 1.89543 4 3 4H14C15.1046 4 16 4.89543 16 6V7H19C21.2091 7 23 8.79086 23 11V12V15V17C23.5523 17 24 17.4477 24 18C24 18.5523 23.5523 19 23 19H22H18.95C18.9828 19.1616 19 19.3288 19 19.5C19 20.8807 17.8807 22 16.5 22C15.1193 22 14 20.8807 14 19.5C14 19.3288 14.0172 19.1616 14.05 19H7.94999C7.98278 19.1616 8 19.3288 8 19.5C8 20.8807 6.88071 22 5.5 22C4.11929 22 3 20.8807 3 19.5C3 19.3288 3.01722 19.1616 3.05001 19H2H1C0.447715 19 0 18.5523 0 18C0 17.4477 0.447715 17 1 17V6ZM16.5 19C16.2239 19 16 19.2239 16 19.5C16 19.7761 16.2239 20 16.5 20C16.7761 20 17 19.7761 17 19.5C17 19.2239 16.7761 19 16.5 19ZM16.5 17H21V15V13H19C18.4477 13 18 12.5523 18 12C18 11.4477 18.4477 11 19 11H21C21 9.89543 20.1046 9 19 9H16V17H16.5ZM14 17H5.5H3V6H14V8V17ZM5 19.5C5 19.2239 5.22386 19 5.5 19C5.77614 19 6 19.2239 6 19.5C6 19.7761 5.77614 20 5.5 20C5.22386 20 5 19.7761 5 19.5Z" fill="#000000"></path> </g></svg></i>
           <h3>Delevring Orders</h3>
           <p> <?php echo executeSingleValueQuery("SELECT COUNT(*) from orders where status='Delevring'"); ?> orders :  <?php echo executeSingleValueQuery("SELECT (COUNT(CASE WHEN status = 'Delevring' THEN 1 END) / COUNT(*)) * 100 AS percentage FROM orders
 "); ?>%</p> 
         </div>
-        <div class="card">
+        <div status='Completed' class="card">
           <i ><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9 10L12.2581 12.4436C12.6766 12.7574 13.2662 12.6957 13.6107 12.3021L20 5" stroke="#33363F" stroke-width="2" stroke-linecap="round"></path> <path d="M21 12C21 13.8805 20.411 15.7137 19.3156 17.2423C18.2203 18.7709 16.6736 19.9179 14.893 20.5224C13.1123 21.1268 11.187 21.1583 9.38744 20.6125C7.58792 20.0666 6.00459 18.9707 4.85982 17.4789C3.71505 15.987 3.06635 14.174 3.00482 12.2945C2.94329 10.415 3.47203 8.56344 4.51677 6.99987C5.56152 5.4363 7.06979 4.23925 8.82975 3.57685C10.5897 2.91444 12.513 2.81996 14.3294 3.30667" stroke="#33363F" stroke-width="2" stroke-linecap="round"></path> </g></svg></i>
           <h3>Completed Orders</h3>
 		  <p> <?php echo executeSingleValueQuery("SELECT COUNT(*) from orders where status='Completed'"); ?> orders :  <?php echo executeSingleValueQuery("SELECT (COUNT(CASE WHEN status = 'Completed' THEN 1 END) / COUNT(*)) * 100 AS percentage FROM orders
 "); ?>%</p>         
         </div>
-		<div class="card">
+		<div status='Cancelled' class="card">
           <i ><svg fill="#000000" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title>cancel</title> <path d="M10.771 8.518c-1.144 0.215-2.83 2.171-2.086 2.915l4.573 4.571-4.573 4.571c-0.915 0.915 1.829 3.656 2.744 2.742l4.573-4.571 4.573 4.571c0.915 0.915 3.658-1.829 2.744-2.742l-4.573-4.571 4.573-4.571c0.915-0.915-1.829-3.656-2.744-2.742l-4.573 4.571-4.573-4.571c-0.173-0.171-0.394-0.223-0.657-0.173v0zM16 1c-8.285 0-15 6.716-15 15s6.715 15 15 15 15-6.716 15-15-6.715-15-15-15zM16 4.75c6.213 0 11.25 5.037 11.25 11.25s-5.037 11.25-11.25 11.25-11.25-5.037-11.25-11.25c0.001-6.213 5.037-11.25 11.25-11.25z"></path> </g></svg></i>
           <h3>Cancelled Orders </h3>
 		  <p> <?php echo executeSingleValueQuery("SELECT COUNT(*) from orders where status='Cancelled'"); ?> orders : <?php echo executeSingleValueQuery("SELECT (COUNT(CASE WHEN status = 'Cancelled' THEN 1 END) / COUNT(*)) * 100 AS percentage FROM orders
@@ -166,7 +166,7 @@ if (isset($_SESSION['username'])) {
 
 	<thead>
 	<tr>
-		<td>Command Number </td>
+		<td>id </td>
 		<td>The User </td>
 		
 		<td>Status</td>
@@ -187,13 +187,13 @@ $Commands =getAllCommandes();
 			   ?>
 		
 
-	<tr id="tr_<?php echo $command['id']; ?>" <?php if(($command['dilivredate']<$todaysDate ) AND ($command['STATUS']!="Completed")){
+	<tr status='<?php echo"  ".$command['STATUS'];?>' id="tr_<?php echo $command['id']; ?>" <?php if(($command['dilivredate']<$todaysDate ) AND ($command['STATUS']!="Completed")){
 		echo "class=red_row";
 	}?>>
 		
 		<td><?php echo $command['id']; ?></td>
 		<td><?php echo $command['FN']." ".$command['LN'] ; ?></td>
-		<td><?php echo$command['icon'];?> <span><?php echo"  ".$command['STATUS'];?> </span></td>
+		<td  ><?php echo$command['icon'];?> <span><?php echo"  ".$command['STATUS'];?> </span></td>
 		<td><?php echo $command['ordate']; ?></td>
 		
 		<td><?php echo $command['dilivredate'];?></td>
@@ -440,7 +440,9 @@ function closeForm(formId) {
 
 		
 	}
+	
 </script>
+<script src="filter.js" ></script>
 </body>
 </html>
 

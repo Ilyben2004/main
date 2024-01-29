@@ -17,55 +17,44 @@ document.addEventListener('DOMContentLoaded', function () {
     
             cartCountElement.innerText = newCount;
         }
-        var totalPriceText = cartPriceElement.textContent;
-        var currentTotalPrice = parseFloat(totalPriceText.replace('MAD', ''));
-    
-        if (isNaN(currentTotalPrice)) {
-            currentTotalPrice = 0;
-        }
-    
-        if (!localStorage.getItem(productId)) {
-            currentTotalPrice += productPrice;
-            localStorage.setItem(productId, productPrice.toString());
-        } else {
-            currentTotalPrice += parseFloat(localStorage.getItem(productId));
-        }
-    
-        cartPriceElement.innerText = currentTotalPrice.toFixed(2) + ' MAD';
+       
     }
 
 
-    function checkifProductExistInPanier(indiceUser,indiceProduct){
+    function checkifProductExistInPanier(indiceUser, indiceProduct, callback) {
         $.ajax({
             url: 'php/checkProductPanier.php',
             method: 'POST',
-            data: { user_id: indiceUser,product_id : indiceProduct },
+            data: { user_id: indiceUser, product_id: indiceProduct },
             success: function (response) {
-                console.log("**********************888 "+response);
-                if(response==1){
-                    console.log("exist");
-                    return false;
+                console.log("**********************888 " + response);
+                var bbol = response == 1 ? false : true;
+                console.log(bbol ? "not exist" : "exist");
+                console.log("ill return " + bbol);
+    
+                if (typeof callback === 'function') {
+                    callback(bbol);
+                } else {
+                    console.error('Callback is not a function');
                 }
-                else{
-                    console.log("not exist");
-                    return true;
-
-
-                }
-              
             },
             error: function (error) {
                 console.error('Error checking product:', error);
             }
         });
 
-
     }
-
     
-      function showalertProductInPanier(){
+    
+      function showalertProductInPanier(indice){
         console.log("******************&7*************");
         var ProductsinCartAlert = document.getElementById('ProductsinCartAlert');
+        if(indice==1){
+            ProductsinCartAlert.innerHTML='Product Added Sucessfully';
+        }
+        else{
+            ProductsinCartAlert.innerHTML='This Product is Already in Your Cart';
+        }
         ProductsinCartAlert.style.display='block';
         setTimeout(function () {
             ProductsinCartAlert.style.display='none';
@@ -83,9 +72,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 var productPrice = parseFloat(button.closest('.card').getAttribute('data-price'));
                 var productId = button.closest('.card').getAttribute('data-product-id');
                 var userId = $(this).data('user-id'); 
+                checkifProductExistInPanier(userId, productId, function (result) {
+                    console.log('Result:', result);
+                    // You can use the result here or perform other actions
+          
 
-            if(checkifProductExistInPanier(userId,productId)){
+            if(result){
                 updateCart(productPrice, productId);
+                showalertProductInPanier(1);
 
               
                 console.log(userId);
@@ -103,9 +97,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
                 });}}
                 else{
-                    showalertProductInPanier();
+
+                    showalertProductInPanier(2);
                   
                 }
+            });
             });
         });
 
@@ -116,10 +112,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 var productId = parseFloat(button.getAttribute('data-product-id'));
                 var productPrice = parseFloat(button.getAttribute('data-price'));
                 var userId = $(this).data('user-id');
-                if(checkifProductExistInPanier(userId,productId)){ 
+                checkifProductExistInPanier(userId, productId, function (result) {
+                    console.log('Result:', result);
+                    // You can use the result here or perform other actions
+          
+
+            if(result){
 
                 updateCart(productPrice, productId);
-
+                showalertProductInPanier(1);
 
 
                 
@@ -138,8 +139,9 @@ document.addEventListener('DOMContentLoaded', function () {
                         }
                     });}}
                     else{
-                        showalertProductInPanier();
+                        showalertProductInPanier(2);
                     }
+                });
                
                 
            });
