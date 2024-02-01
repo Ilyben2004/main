@@ -247,6 +247,13 @@ editProfileSection.style.display = 'block';
     </div>
     </div>
 
+
+
+    <table class="products-table" id="originalTable">
+      <tbody id="productsRow">
+              <?php include "php/loadProductsCategory.php?someVariable=" . urlencode( getidbycate($product['category_name']));  ?>
+      </tbody>
+    </table>
 <?php
     } else {
         echo "Product not found";

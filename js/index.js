@@ -752,6 +752,24 @@ function playAudio(audio) {
     audio.play();
 }
 
+
+function updatecartAfterlike(indiceUser) {
+    $.ajax({
+        url: 'php/getnumbersProductsInPanier.php',
+        method: 'POST',
+        data: { user_id: indiceUser},
+        success: function (response) {
+            console.log(response);
+
+         
+        },
+        error: function (error) {
+            console.error('Error checking product:', error);
+        }
+    });
+
+}
+
 function addAllToCart() 
 {
     var bttn = document.getElementById('addAll');
