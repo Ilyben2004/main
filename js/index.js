@@ -760,6 +760,13 @@ function updatecartAfterlike(indiceUser) {
         data: { user_id: indiceUser},
         success: function (response) {
             console.log(response);
+            var cartCountElement = document.getElementById('cartCount');
+            console.log("im in update cart after like responese is : "+response);
+            var cartcount =   JSON.parse(response);
+          
+            cartCountElement.innerText = cartcount;
+
+            
 
          
         },
@@ -786,6 +793,7 @@ function addAllToCart()
     })
     .then(response => response.text())
     .then(data => {
+      
         console.log(data); // Handle the response from PHP
         bttn.innerHTML=`<i class="fa-solid fa-check"></i>	Added`;
         bttn.style.width=90 +'px';
@@ -799,7 +807,7 @@ function addAllToCart()
         }, 2000)
 
        
-      
+        updatecartAfterlike(idUser);
        
     
     })

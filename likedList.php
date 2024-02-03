@@ -305,7 +305,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
 
 <div class="" id="beforeProducts">
-    <h3>Liked Products</h3>
+<h2 class="font-weight-bold mb-0"  style=" max-width: 50%; text-align: justify; margin-left:2%;color:#3498db"><span>
+<i class="fa-regular fa-heart"></i></span>
+                     Liked Products : </h2>
     <button id="addAll" id-user="<?php echo $userId ?>" onclick="addAllToCart()">
     <i class="fa-solid fa-cart-plus"></i>
         Add All To The Cart</button>

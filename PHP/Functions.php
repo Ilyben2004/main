@@ -824,6 +824,26 @@ function getOneUser($idUser) {
 
     return $user;
 }
+function truncateString($inputString) {
+    // Ensure the input is a string
+    if (!is_string($inputString)) {
+        return "Invalid input: not a string";
+    }
+
+    // Trim the string to the first 13 characters
+    $truncatedString = substr($inputString, 0, 13);
+
+    // Append "..." to the truncated string
+    $resultString = $truncatedString . "...";
+
+    // Ensure the result is exactly 16 characters
+    if (strlen($resultString) > 16) {
+        $resultString = substr($resultString, 0, 16);
+    }
+
+    return $resultString;
+}
+
 
 ?>
 

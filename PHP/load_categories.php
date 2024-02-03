@@ -1,5 +1,7 @@
 <?php
 include "./config.php";
+include "./Functions.php";
+
 
 
 
@@ -29,6 +31,8 @@ $products = [];
 
 if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
+        $row['title'] =  truncateString($row['title']);
+
         $products[] = $row;
     }
 }

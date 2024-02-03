@@ -248,10 +248,18 @@ editProfileSection.style.display = 'block';
     </div>
 
 
-
-    <table class="products-table" id="originalTable">
+    <h2 class="font-weight-bold mb-0"  style=" max-width: 50%; text-align: justify; margin-left:2%;color:#3498db"><span>
+    <i class="fa-solid fa-cart-shopping"></i></span>
+                     Similiar Products : </h2>
+    
+    
+                     <table class="products-table" id="originalTable">
       <tbody id="productsRow">
-              <?php include "php/loadProductsCategory.php?someVariable=" . urlencode( getidbycate($product['category_name']));  ?>
+              <?php 
+              $idcategory = getidbycate($product['category_name']);
+              $idproduct =$productId;
+
+              include "php/loadProductsCategory.php";  ?>
       </tbody>
     </table>
 <?php

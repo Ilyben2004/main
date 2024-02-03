@@ -1082,6 +1082,7 @@ select option
     text-align: center;
     font-family: arial;
 	padding: 8px;
+	width:300px;
   }
   
   .price {
@@ -1232,3 +1233,8 @@ div#getAdress input{
 .cart_icon{
 	margin-top: 4%;
 }
+
+#SimilarP{
+	margin-left: 2%;
+}
+

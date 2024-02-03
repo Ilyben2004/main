@@ -24,7 +24,7 @@ $result = mysqli_query(db(), $all_products_query);
 $count = 0;
 if ($result && mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {?>
-   <td>
+   <td class="productsTouser">
   <a href="product_page.php?id=<?php echo $row['id']; ?>" style="text-decoration: none;">
     <div class="card"
       data-price="<?php echo $row['PRIX']; ?>"
@@ -49,7 +49,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 <img src="<?php echo $imageSource; ?>" alt="">
  
    </div>
-      <h2><?php echo $row['title']; ?></h2>
+      <h2><?php echo  truncateString( $row['title']); ?></h2>
       <p class="PRIX"><b><?php echo $row['PRIX']; ?> MAD</b></p>
     </a>
     <p>

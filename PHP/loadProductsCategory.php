@@ -21,12 +21,13 @@ else{
 }
 
 
-$all_products_query = "SELECT * FROM products WHERE Quantity>0 And  id_category=$idCategory";
+$all_products_query = "SELECT * FROM products WHERE Quantity>0 And  id_category=$idcategory";
 $result = mysqli_query(db(), $all_products_query);
 
 $count = 0;
 if ($result && mysqli_num_rows($result) > 0) {
-    while ($row = mysqli_fetch_assoc($result)) {?>
+    while ($row = mysqli_fetch_assoc($result)) {
+      if( $idproduct!=$row['id']){?>
    <td>
   <a href="product_page.php?id=<?php echo $row['id']; ?>" style="text-decoration: none;">
     <div class="card"
@@ -52,7 +53,7 @@ if ($result && mysqli_num_rows($result) > 0) {
 <img src="<?php echo $imageSource; ?>" alt="">
  
    </div>
-      <h2><?php echo $row['title']; ?></h2>
+      <h2><?php echo  truncateString( $row['title']); ?></h2>
       <p class="PRIX"><b><?php echo $row['PRIX']; ?> MAD</b></p>
     </a>
     <p>
@@ -75,6 +76,7 @@ if ($result && mysqli_num_rows($result) > 0) {
         if ($count % 4 === 0) {
             echo '</tr><tr>';
         }
+      }
     }
 } else {
     echo "<td colspan='4'>No products found</td>";
