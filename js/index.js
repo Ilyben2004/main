@@ -462,6 +462,7 @@ function updateSubtotal() {
 
 
 function checkout(userId) {
+    console.log("im cheacked by user "+userId);
    var adresseForm =  document.getElementById('getAdresse');
    adresseForm.style.display='block';
    document.getElementById('adresseInput').addEventListener('keydown', function(event) {
@@ -509,10 +510,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-$('#checkoutButton').on('click', function () {
-    var userId = $(this).data('user-id');
-    checkout(userId);
-});
+
 
 $("#saveProfileBtn").click(function(event) {
     event.preventDefault();
@@ -829,3 +827,29 @@ function ShowQuantitimessage(){
     }, 4000)
    
 }
+function getBillFromDatabase(indiceUser, callback) {
+    // Make an AJAX request to the PHP script
+    $.ajax({
+        url: 'php/getBill.php',
+        method: 'POST',
+        data: { user_id: indiceUser },
+        success: function (response) {
+            var totalprice = JSON.parse(response);
+            console.log("im the total price : " + totalprice);
+
+            // Call the callback function with the total price
+            if (typeof callback === 'function') {
+                callback(totalprice);
+            }
+        },
+        error: function (error) {
+            console.error('Error checking product:', error);
+        }
+    });
+}
+
+// Usage with a callback function
+getBillFromDatabase(1, function (price) {
+    console.log("total price is : " + price);
+});
+

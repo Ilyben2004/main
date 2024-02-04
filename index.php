@@ -15,7 +15,7 @@ if (isset($_SESSION['username'])) {
 
 $userQuery = "SELECT id, EMAIL FROM users WHERE USERNAME = '$username'";
 $userResult = mysqli_query($conn, $userQuery);
-
+$userId = 0;
 if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userRow = mysqli_fetch_assoc($userResult);
     $userId = $userRow['id'];
@@ -204,6 +204,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                       </ul>
                     </li>
                     <li><a href="about.php">About<i class="fas fa-chevron-down"></i></a></li>
+                    <li>
+                      
+                    </li>
                   </ul>
                               </div>
       </nav>

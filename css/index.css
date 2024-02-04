@@ -1238,3 +1238,56 @@ div#getAdress input{
 	margin-left: 2%;
 }
 
+#paypal-button-container {
+	color: white;
+	padding: 10px;
+	border-radius: 5px;
+	width: 300px;
+}
+
+button#checkoutButton{
+	background-color: black;
+	margin-left: 11%;
+	cursor: default;
+	
+
+}
+#designsContainer {
+    border-top:rgba(112, 109, 109, 0.377) 1px solid;
+    height: 300px;
+    width: 800px;
+    margin-top: -28%;
+    display: flex;
+    flex-wrap: wrap; /* Allows items to wrap to the next row */
+}
+
+#designsContainer .iconMessageContainer {
+    width: 48%; /* Adjusted to leave some space for margins and prevent wrapping issues */
+    height: 45%;
+    margin: 1%; /* Adjusted to add some margin between divs */
+	display: flex;
+}
+#designsContainer .iconMessageContainer .imagecontainer{
+	width: 25%;
+	height: 100%;
+ 
+}
+#designsContainer .iconMessageContainer .imagecontainer img{
+	width: 80px;
+	height: 80px;
+	margin-top: 20%;
+}
+
+
+#designsContainer .textsConteiner .title{
+	font-weight: bolder;
+	color:#140c42;
+}
+#designsContainer .textsConteiner{
+	padding-left: 1%;
+	padding-top: 5%;
+}
+#designsContainer .textsConteiner .textDescreption{
+color:#140c42;
+padding-top: 1%;
+}

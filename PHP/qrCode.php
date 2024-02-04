@@ -32,7 +32,7 @@ $options = new QROptions(
     ]
 );
 
-$qrcode = (new QRCode($options))->render('http://192.168.11.105:80/main/php/ConfirmOrder.php?orderId='.$var2, 'fileQR.png'); // change the file extension
+$qrcode = (new QRCode($options))->render('http://192.168.1.122:80/main/php/ConfirmOrder.php?orderId='.$var2, 'fileQR.png'); // change the file extension
 ?>
 
 

@@ -60,7 +60,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
         <link rel="stylesheet" href="css/edit_profile.css">
         
-        <script src="js/index.js" defer></script>        
 
 </head>
 <body>
@@ -242,7 +241,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             </thead>
             <tbody>
             <?php
-$query = "SELECT pr.* FROM panier p JOIN products pr ON p.id_product = pr.id ORDER BY `pr`.`id` ASC";
+$query = "SELECT pr.* FROM panier p JOIN products pr ON p.id_product = pr.id where p.id_user=$userId ORDER BY `pr`.`id` ASC";
 $cartResult = mysqli_query($conn, $query);
 foreach ($cartResult as $row) {
 ?>
@@ -284,82 +283,11 @@ foreach ($cartResult as $row) {
         </div>
 
 
-        <div class="card1 shadow-2-strong mb-5 mb-lg-0" style="border-radius: 16px;">
-          <div class="card-body p-4">
-
-            <div class="row">
-              <div class="col-md-6 col-lg-4 col-xl-3 mb-4 mb-md-0">
-                <form>
-                  <div class="d-flex flex-row pb-3">
-                    <div class="d-flex align-items-center pe-2">
-                      <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel1v"
-                        value="" aria-label="..." checked />
-                    </div>
-                    <div class="rounded border w-100 p-3">
-                      <p class="d-flex align-items-center mb-0">
-                        <i class="fab fa-cc-mastercard fa-2x text-dark pe-2"></i>Credit
-                        Card
-                      </p>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-row pb-3">
-                    <div class="d-flex align-items-center pe-2">
-                      <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel2v"
-                        value="" aria-label="..." />
-                    </div>
-                    <div class="rounded border w-100 p-3">
-                      <p class="d-flex align-items-center mb-0">
-                        <i class="fab fa-cc-visa fa-2x fa-lg text-dark pe-2"></i>Debit Card
-                      </p>
-                    </div>
-                  </div>
-                  <div class="d-flex flex-row">
-                    <div class="d-flex align-items-center pe-2">
-                      <input class="form-check-input" type="radio" name="radioNoLabel" id="radioNoLabel3v"
-                        value="" aria-label="..." />
-                    </div>
-                    <div class="rounded border w-100 p-3">
-                      <p class="d-flex align-items-center mb-0">
-                        <i class="fab fa-cc-paypal fa-2x fa-lg text-dark pe-2"></i>PayPal
-                      </p>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="col-md-6 col-lg-4 col-xl-6">
-                <div class="row">
-                  <div class="col-12 col-xl-6">
-                    <div class="form-outline mb-4 mb-xl-5">
-                      <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
-                        placeholder="John Smith" />
-                      <label class="form-label" for="typeName">Name on card</label>
-                    </div>
-
-                    <div class="form-outline mb-4 mb-xl-5">
-                      <input type="text" id="typeExp" class="form-control form-control-lg" placeholder="MM/YY"
-                        size="7" id="exp" minlength="7" maxlength="7" />
-                      <label class="form-label" for="typeExp">Expiration</label>
-                    </div>
-                  </div>
-                  <div class="col-12 col-xl-6">
-                    <div class="form-outline mb-4 mb-xl-5">
-                      <input type="text" id="typeText" class="form-control form-control-lg" siez="17"
-                        placeholder="1111 2222 3333 4444" minlength="19" maxlength="19" />
-                      <label class="form-label" for="typeText">Card Number</label>
-                    </div>
-
-                    <div class="form-outline mb-4 mb-xl-5">
-                      <input type="password" id="typeText" class="form-control form-control-lg"
-                        placeholder="&#9679;&#9679;&#9679;" size="1" minlength="3" maxlength="3" />
-                      <label class="form-label" for="typeText">Cvv</label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-4 col-xl-3">
+       
+              <div class="col-lg-4 col-xl-3" style="margin-left: 80%;"> 
                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                   <p class="mb-2">Subtotal</p>
-                  <p class="mb-2" id="subtotalValue"><?php echo number_format(executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user;
+                  <p class="mb-2" id="subtotalValue"><?php echo number_format(executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id  WHERE p.id_user =$userId GROUP BY p.id_user;
 ")) ?> MAD</p>
                 </div>
 
@@ -371,16 +299,76 @@ foreach ($cartResult as $row) {
                 <hr class="my-4">
                 <button type="button" class="btn btn-primary btn-block btn-lg" style="width: 245px; margin-top:38px"; id="checkoutButton" data-user-id="<?php echo $userId ?>">
                   <div class="d-flex justify-content-between">
-                    <span>Checkout</span>
-                    <span style="margin-left: 8px;" id="totalValue"> <?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user"), 2) ?> MAD</span>
+                    <span>Total bill :</span>
+                    <span style="margin-left: 8px;" id="totalValue"> <?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id WHERE p.id_user=$userId GROUP BY p.id_user"), 2) ?> MAD</span>
                   </div>
+
                 </button>
+                <div id="paypal-button-container"></div>
+
 
               </div>
+            <div id="designsContainer">
+              <div class="iconMessageContainer">
+                <div class="imagecontainer">
+                  <img src="images/cashchanges.png" alt="">
+                </div>
+                <div class="textsConteiner">
+
+                <div class="title">Secure Payments</div>
+                <div class="textDescreption">
+                100% Secure Payment Powered with Paypal Gateway 
+                </div>
+
+                </div>
+
+              </div>
+              <div class="iconMessageContainer">
+              <div class="imagecontainer">    <img src="images/travel.png" alt=""></div>
+              <div class="textsConteiner">
+
+                <div class="title">Worldwide Shipping
+</div>
+                <div class="textDescreption">
+                Available as standard or express delivery from 5 to 20 Days 
+                </div>
+
+                </div>
+                
+              </div>
+              <div class="iconMessageContainer">
+                 <div class="imagecontainer">    <img src="images/service.png" alt=""></div>
+              <div class="textsConteiner">
+
+                <div class="title">Super Service
+</div>
+                <div class="textDescreption">
+                Hassle-free returns and friendly customer support
+                </div>
+
+                </div>
+                </div>
+                <div class="iconMessageContainer">
+                <div class="imagecontainer">    <img src="images/carbon.png" alt=""></div>
+              <div class="textsConteiner">
+
+                <div class="title">Remises Systeme 
+</div>
+                <div class="textDescreption">
+                A System that makes you get remises from Promo Codes
+                </div>
+
+                </div>
+             
+                
+                </div>
+            </div>
+            
             </div>
 
           </div>
         </div>
+        
 
       </div>
     </div>
@@ -414,6 +402,7 @@ foreach ($cartResult as $row) {
   <section class="">
     <div class="container text-center text-md-start mt-5">
       <div class="row mt-3">
+        
         <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
           <h6 class="text-uppercase fw-bold mb-4">
           <i class="fa-solid fa-dumbbell"></i> ProFitFuel   
@@ -489,6 +478,51 @@ foreach ($cartResult as $row) {
 </div>
 </div>
 
-    
+<script src="js/index.js" ></script>        
+
+ <!-- Replace the "test" client-id value with your client-id -->
+ <script src="https://www.paypal.com/sdk/js?client-id=Abp56uKdqvMqNs3jnMBkcdGnBKdzzx8DEwtZXrBypqNYGarM6dSCzM689I7n1y3VmacbHtscXEQh_Nry&currency=USD"></script>
+
+<script>
+    var userId = $('#checkoutButton').data('user-id');
+
+paypal.Buttons({
+    createOrder: function(data, actions) {
+        
+        
+        // Use Promise to handle asynchronous call to getBillFromDatabase
+        return new Promise(function (resolve, reject) {
+            getBillFromDatabase(userId, function (price) {
+                console.log("total price is : " + price);
+
+                // Check if the price is a valid number
+                if (isNaN(price) || price <= 0) {
+                    reject('Invalid price');
+                }
+
+                // Resolve the Promise with the order details
+                resolve(actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            currency_code: 'USD',
+                            value: price.toFixed(2) // Ensure two decimal places
+                        }
+                    }]
+                }));
+            });
+        });
+    },
+    onApprove: function(data, actions) {
+
+        // Capture the funds from the transaction
+        return actions.order.capture().then(function(details) {
+          checkout(userId);
+
+        });
+    }
+}).render('#paypal-button-container');
+
+</script>
+
 </body>
 </html>
