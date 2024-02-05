@@ -235,6 +235,7 @@ function decrementCart(productId) {
                 if (searchTerm.trim() === "") {
                     $("#searchResults").empty(); 
                     $("#originalTable").show(); 
+                    validaterangeInitial();
                 } else {
                     $("#originalTable").hide(); 
                     displayFilteredProducts(data);
@@ -263,6 +264,7 @@ function decrementCart(productId) {
     function displayAllProducts() {
         $("#searchResults").empty();
         $("#originalTable").show(); 
+        validaterangeInitial();
         attachAddToCartListeners(); 
     }
 
@@ -274,6 +276,8 @@ function decrementCart(productId) {
         var count = 0;
 
         data.forEach(function (products) {
+            validaterangeInitial();
+
             if (count % 4 === 0) {
                 $searchResults.append('<tr>');
             }
@@ -300,7 +304,7 @@ if(products.isLiked==1 ){
 }
 
             $searchResults.append(
-                '<td>' +
+                '<td class="productsTouser" data-price="'+products.PRIX+'">' +
                 '<a href="product_page.php?id='+ products.id +'">'+
                 '<div class="card" data-price="' + products.PRIX + '" data-product-id="' + products.id + '" ' +
                     'onmouseover="this.style.borderColor=\'#007bff\'; this.style.transform=\'scale(1.1)\';" ' +
@@ -412,6 +416,7 @@ if(products.isLiked==1 ){
                 // Your additional logic or actions here (if needed)
             });
         });
+       
     }
 
     function handleCategoryFilter(category) {

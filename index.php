@@ -205,7 +205,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
                     </li>
                     <li><a href="about.php">About<i class="fas fa-chevron-down"></i></a></li>
                     <li>
-                      
+                    <div class="cardPriceFilter ">
+      
+
+      <div class="price-content">
+        <div id="min-value-div" >
+          <p id="min-value">$50</p>
+        </div>
+        <div class="range-slider">
+        <div class="range-fill"></div>
+        
+        <input id="minchange"
+          type="range"
+          class="min-price"
+          value="0"
+          min="0"
+          max="500"
+          step="10"
+        />
+        <input id="maxchange"
+          type="range"
+          class="max-price"
+          value="500"
+          min="10"
+          max="500"
+          step="10"
+        />
+      </div>
+
+        <div  id="max-value-div">
+          <p id="max-value">$500</p>
+        </div>
+      </div>
+
+    
+    </div>
                     </li>
                   </ul>
                               </div>
@@ -542,5 +576,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 </script> 
 
 <audio id="likesound" src="product_images/likeSound.mp3"></audio>
+<script src="js/priceFilter.js" ></script>
+
   </body>
   </html>
