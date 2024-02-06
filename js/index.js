@@ -260,6 +260,7 @@ function decrementCart(productId) {
             }
         });
     }
+    
 
     function displayAllProducts() {
         $("#searchResults").empty();

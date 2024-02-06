@@ -348,6 +348,11 @@ div.iconoti{
 
   
 }
+#notificationsPopup{
+  box-shadow: -15px 10px 39px 12px rgba(0,0,0,0.45);
+  -webkit-box-shadow: -15px 10px 39px 12px rgba(0,0,0,0.45);
+  -moz-box-shadow: -15px 10px 39px 12px rgba(0,0,0,0.45);
+}
 div.message{
   width: 95%;
   height: 100%;
