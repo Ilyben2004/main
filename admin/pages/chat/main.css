@@ -1,0 +1,121 @@
+div#messages{
+    width: 700px;
+    height: 400px;
+    background-color: white;
+    margin-left: 23%;
+    margin-top: 7%;
+    border-radius: 5%;
+    border: solid 1px black;
+    display: flex;
+    color: black;
+}
+div#userContainer{
+
+    width: 40%;
+    border-right: 1px solid rgba(202, 194, 194, 0.658);;
+
+}
+div#userContainer div.users{
+    height: 55px;
+    display: flex;
+    border-bottom: 1px solid rgba(202, 194, 194, 0.658);
+
+    
+}
+
+div#userContainer div.users div.imageUser{
+    width: 20%;
+    padding-left: 2%;
+    padding-top: 1.8%;
+
+    
+}
+
+div#userContainer div.users div.imageUser img{
+height: 40px;
+width: 40px;
+
+
+    
+}
+div#userContainer div.users div.username{
+margin-top: 1%;
+font-size: 13px;
+font-weight: bold;
+    
+}
+div#userContainer div.users div.message{
+    font-size: 10px;
+    color: grey;
+    font-weight: bold;
+    padding-left: 5%;
+height: 58%;
+width: 150%;
+padding-bottom: 8%;
+line-height: 1.2;
+}
+
+
+div.beforeShowConv{
+
+    color: grey;
+    padding-top: 15%;
+    padding-left: 7%;
+    font-weight: bold;
+  
+
+    
+}
+div.beforeShowConv svg{
+
+    margin-left: 30%;
+  
+
+    
+}
+
+
+div.messagesShowen{
+    width: 60%;
+    border-top-right-radius:5% ;
+}
+
+div.messagesShowen div.headerConv{
+    height: 14%;
+    padding-left: 3.5%;
+    padding-top: 3%;
+    font-weight: bold;
+}
+
+.messages {
+    border: 1px solid #ccc;
+    padding: 10px;
+    overflow: auto;
+    
+    background-color: #f9f9f9;
+    height: 73%;
+}
+
+.amessage {
+    margin-bottom: 10px;
+    padding: 8px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sender {
+    color: #3498db;
+}
+
+.recipient {
+    color: #2ecc71;
+}
+
+input#messageInput{
+    width: 90%;
+    height: 50px;
+    border-bottom-right-radius:10% ;
+    border: none;
+
+}

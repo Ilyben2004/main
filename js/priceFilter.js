@@ -171,8 +171,92 @@ function validaterangeInitial(){
 
   // Update the displayed min and max values
   minValue.innerHTML = minPrice+' MAD';
-  maxValue.innerHTML =   maxPrice+' MAD';http://localhost/main/index.phpVALIDA
+  maxValue.innerHTML =   maxPrice+' MAD';
 
 originalElement.innerHTML=clonedElement.innerHTML;
+var svgContainers = document.querySelectorAll('.svgContainer');
+svgContainers.forEach(function(container) {
+    container.addEventListener('click', function(event) {
+      event.preventDefault();
+      
+
+         var isliked = this.getAttribute('isLiked');
+         var idUser = this.getAttribute('data-user-id');
+         var idProduct = this.getAttribute('data-product-id');
+
+         console.log(idUser);
+         console.log(idProduct);
+
+         if(idUser==0 ){
+          showSignUpMessage();
+         }
+         else{
+          if(isliked==1){
+
+
+            // ************************** // 
+
+            fetch('PHP/removeFromLike.php', {
+method: 'POST',
+body: new URLSearchParams({
+    'idU': idUser,
+    'idP': idProduct
+})
+})
+.then(response => response.text())
+.then(data => {
+console.log(data); // Handle the response from PHP
+this.innerHTML='<img src="./product_images/heart.png" alt="">';
+            this.setAttribute('isLiked',0);
+})
+.catch(error => {
+console.error('There was an error with the fetch operation:', error);
+});
+
+
+            //***************************// 
+            
+        
+
+          }
+          else{
+
+
+
+
+
+            //*************************** *//
+            fetch('PHP/addToLike.php', {
+method: 'POST',
+body: new URLSearchParams({
+    'idU': idUser,
+    'idP': idProduct
+})
+})
+.then(response => response.text())
+.then(data => {
+console.log(data); // Handle the response from PHP
+this.innerHTML='<img src="./product_images/hearted.png" alt="">';
+            this.setAttribute('isLiked',1);
+            var audio =document.getElementById('likesound');
+            playAudio(audio) ;
+
+
+})
+.catch(error => {
+console.error('There was an error with the fetch operation:', error);
+});
+
+            //****************************************//
+          
+
+
+          }
+         }
+
+
+        // Your additional logic or actions here (if needed)
+    });
+});
 
 }

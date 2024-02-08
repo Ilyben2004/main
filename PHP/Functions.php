@@ -845,5 +845,131 @@ function truncateString($inputString) {
 }
 
 
+
+
+function insertMessage($message, $from, $to){
+    $mysqli = connect();
+
+    if ($mysqli->connect_errno) {
+        return false;
+    }
+ 
+    $query = "INSERT INTO messages (`message`, `from`, `to`) VALUES (?, ?, ?)";
+ 
+    if ($stmt = $mysqli->prepare($query)) {
+        $stmt->bind_param("sii", $message, $from, $to);
+ 
+        if ($stmt->execute()) {
+            $stmt->close();
+            $mysqli->close();
+            return true;
+        } else {
+            $stmt->close();
+            $mysqli->close();
+            return false;
+        }
+    } else {
+        $mysqli->close();
+        return false;
+    }
+}
+
+
+function getMessagesForUser($idUser){
+    $mysqli = connect();
+
+    $query = "SELECT * FROM messages WHERE `from` = ? OR `to` = ? ORDER BY id";
+
+    if ($stmt = $mysqli->prepare($query)) {
+        $stmt->bind_param("ii", $idUser, $idUser);
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $message[] = $row;
+                }
+            }
+
+            $stmt->close();
+            $mysqli->close();
+            return $message;
+        } else {
+            $stmt->close();
+            $mysqli->close();
+            return false;
+        }
+    } else {
+        $mysqli->close();
+        return false;
+    }
+}
+function getMessagesForadmin(){
+    $mysqli = connect();
+
+    $query = "SELECT id, message, `from`, `to` FROM messages WHERE (`from` = 0 OR `to` = 0) AND id IN ( SELECT MAX(id) AS max_id FROM messages WHERE `from` = 0 OR `to` = 0 GROUP BY IF(`from` = 0, `to`, `from`) ) ORDER BY id DESC;";
+
+    if ($stmt = $mysqli->prepare($query)) {
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $message[] = $row;
+                }
+            }
+
+            $stmt->close();
+            $mysqli->close();
+            return $message;
+        } else {
+            $stmt->close();
+            $mysqli->close();
+            return false;
+        }
+    } else {
+        $mysqli->close();
+        return false;
+    }
+}
+
+function getConversationforAdmin($idUser){
+    $mysqli = connect();
+
+    $query = "SELECT id, message, `from`, `to` FROM messages WHERE (`from` = $idUser OR `to` = $idUser) ;";
+
+    if ($stmt = $mysqli->prepare($query)) {
+
+        if ($stmt->execute()) {
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $message[] = $row;
+                }
+            }
+
+            $stmt->close();
+            $mysqli->close();
+            return $message;
+        } else {
+            $stmt->close();
+            $mysqli->close();
+            return false;
+        }
+    } else {
+        $mysqli->close();
+        return false;
+    }
+
+
+
+}
+
+
+
+
 ?>
 

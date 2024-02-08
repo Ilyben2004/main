@@ -493,6 +493,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     var svgContainers = document.querySelectorAll('.svgContainer');
     svgContainers.forEach(function(container) {
         container.addEventListener('click', function(event) {
+          event.preventDefault();
+          
+
              var isliked = this.getAttribute('isLiked');
              var idUser = this.getAttribute('data-user-id');
              var idProduct = this.getAttribute('data-product-id');
@@ -568,7 +571,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
              }
 
 
-            event.preventDefault();
             // Your additional logic or actions here (if needed)
         });
     });
@@ -587,14 +589,8 @@ if($userId!=0){ ?>
  
   
   <hr>
-  <div id="chat">
-  <div class="message sender1">
-    <img src="adminAVATAR.png" alt="Sender 1 Avatar" class="avatar">
-    Hello!
-  </div>
-  <div class="message sender2">
-    Hi there!
-  </div>
+  <div id="chat" userID="<?php echo $userId ?>">
+  
   <!-- Add more messages with images as needed -->
 </div>
 
