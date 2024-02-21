@@ -10,6 +10,8 @@ if (isset($_SESSION['username'])) {
     $username = 0;
 }
 
+if($username!=0){
+
 $userQuery = "SELECT id, EMAIL FROM users WHERE USERNAME = '$username'";
 $userResult = mysqli_query($conn, $userQuery);
 
@@ -18,7 +20,7 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userId = $userRow['id'];
     $email = $userRow['EMAIL'];
 }
-
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     session_destroy();
 
@@ -53,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
           <link rel="stylesheet" href="css/index.css">
           <link rel="stylesheet" href="css/edit_profile.css">
           <link rel="stylesheet" href="css/about.css">
-          <script src="js/index.js" defer></script>
           
 
   </head>
@@ -78,31 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     <div class="user_icon"><img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918647/user.svg" alt=""></div>
     <div style="display: inline-block; margin-top: 10px;"><a href="signup.php">Register</a></div>
     <div style="display: inline-block; margin-top: 10px;"><a href="login.php">Sign in</a></div>
-<?php } else { ?>
-    <div style="display: inline-block;">
-      <button type="button" id="showUserCommand" class="btn btn-light" style="margin-top: 10px;" onclick="toggleUserOrders()">
-      <i class="fa-regular fa-handshake" style="margin-right: 8px;"> </i>Your Commands
-      </button>
-    </div>
-    <div style="display: inline-block;">
-       <button type="button" id="editProfileBtn" class="btn btn-light" style="margin-top: 10px;">
-       <i class="fa-regular fa-pen-to-square" style="margin-right: 8px;"> </i>Edit Profile
-      </button>
-    </div>
-    <form method="post" style="display: inline-block;">
-        <button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">
-        <i class="fa-solid fa-arrow-right-from-bracket" ></i>
-      </button>
-    </form>
-    <script>
-    document.getElementById('editProfileBtn').addEventListener('click', function() {
-        var editProfileSection = document.getElementById('editProfileSection');
-        editProfileSection.style.display = 'block';
-    });
-</script>
+<?php }  ?>
+    
 
-
-<?php } ?>
 
                 </div>
               </div>
@@ -125,39 +104,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 
             <!-- Search -->
             <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
-              <div class="header_search">
-                <div class="header_search_content">
-                  <div class="header_search_form_container">
-                  <form action="#" class="header_search_form clearfix" id="searchForm">
-      <input type="search" required="required" class="header_search_input" id="searchInput" placeholder="Search for products...">
-      <button type="button" class="header_search_button trans_300" id="searchButton">
-          <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918770/search.png" alt="">
-      </button>
-  </form>
-
-                  </div>
-                </div>
-              </div>
+              
             </div>
 
             <div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
                 <!-- Cart -->
-                <?php if($username!=0){ ?>
-
-                  <div class="cart">
-                    <div class="cart_container d-flex flex-row align-items-center justify-content-end">
-                      <div class="cart_icon">
-                        <img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918704/cart.png" alt="">
-                        <div class="cart_count"><span id="cartCount"><?php echo executeSingleValueQuery("SELECT SUM(quantity) AS quantity FROM panier WHERE id_user = '$userId'"); ?></span></div>
-                      </div>
-                      <div class="cart_content">
-                        <div class="cart_text"><a href="cart.php">Cart</a></div>
-                        <div class="cart_price"><span id="cartPrice"><?php echo executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id GROUP BY p.id_user;
-"); ?></span> MAD</div>
-                      </div>
-                    </div>
-                  </div>
-                <?php } ?>
+            
 
               </div>
             </div>
@@ -192,11 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
           <div id="successMessage" style="background: #4CAF50;color: white; padding: 10px; border-radius: 5px; width:100%; height:40px;display: none;">
                   <h6 style="text-align: center;">Your order was sent successfully!. Check Your <b>EMAIL!</b></h6>
           </div>
-          <?php if ($username == 0): ?>
-        <div id="signupAlert" class="alert alert-warning" role="alert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 10px; border-radius: 5px; width: 600px; text-align: center; z-index: 1000;">
-            This is a warning alert—check it out! You need to sign up to add items to your cart. Please <b>sign up first.</b>
-        </div>
-    <?php endif; ?>
+          
     </header>
 
     <div id="editProfileSection" class="container rounded bg-white mt-5" style="display: none;">
@@ -338,8 +286,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     <div class="row text-center">
 
    
-        <div class="col-md-6 mb-5">
-            <div class="bg-white rounded shadow-sm py-5 px-4">
+        <div id="ilyasCard" class="col-md-6 mb-5">
+             <div class="bg-white rounded shadow-sm py-5 px-4">
                 <img src="./product_images/WhatsApp Image 2023-12-09 at 18.47.23_3f410c6b.jpg" alt="" width="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
                 <h5 class="mb-0">Ilyas Benv</h5>
                 <span class="small text-uppercase text-muted">Web - Developer</span>
@@ -352,7 +300,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
             </div>
         </div>
 
-        
+      
     </div>
 </div>
 </section>

@@ -70,7 +70,7 @@ table {
   margin-left: 3%;
   width: 200px;
   height: 30px;
-  background-color: #D6EEEE;
+  background-color: #ffffff;
   margin-top: 0.5%;
 }
 
@@ -341,6 +341,10 @@ hr.style-two {
   width: 200px;
   height: 40px;
   border-radius: 10%;
+}
+.form-popup button:hover{
+  background-color: rgba(0, 128, 0, 0.888) ;
+ 
 }
 
 .card{

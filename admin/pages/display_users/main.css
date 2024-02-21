@@ -142,3 +142,29 @@ select{
   cursor: pointer;
   text-decoration: underline;
 }
+
+button{
+  border-radius: 5%;
+  width: 120px;
+  height: 35px;
+}
+
+button.NotSuspended{
+  background-color: #D6EEEE;
+  border: 0.5px green solid;
+
+}
+button.IsSuspended{
+  background-color: #ead0d0;
+  border: 0.5px rgb(239, 42, 7) solid;
+
+}
+button.NotSuspended:hover{
+  background-color: #79d2d2;
+
+}
+
+button.IsSuspended:hover{
+  background-color: #ea9595;
+
+}

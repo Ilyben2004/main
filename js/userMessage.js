@@ -2,7 +2,6 @@ var chatid = document.getElementById('chat');
 var useridid= chatid.getAttribute("userID");
 
 
-
  function updateUserMessage(message){
 
     var chat = document.getElementById('chat');
@@ -31,11 +30,19 @@ var useridid= chatid.getAttribute("userID");
 
  }
 
- document.getElementById('sendMessage').addEventListener('click',function(){
+ document.getElementById('MessageInput').addEventListener('keyup',function(event){
+
     var mainput = document.getElementById('MessageInput');
     var msg = mainput.value;
+    if(msg!=""){
+        if (event.keyCode === 13) {
+
+
+    
     updateUserMessage(msg);
     mainput.value="";
+}
+    }
 
  })
 
@@ -51,7 +58,7 @@ var useridid= chatid.getAttribute("userID");
         method: 'POST',
         data: { user_id: idUser },
         success: function (response) {
-            console.log("qohba : "+response);
+            console.log(" "+response);
             var phpData = JSON.parse(response);
             if(phpData.length>chat.childElementCount){
                 for (var i = chat.childElementCount; i < phpData.length; i++) {
@@ -90,3 +97,11 @@ var useridid= chatid.getAttribute("userID");
     // Call your function here
     getMessagesDb(useridid);
 }, 5000);
+
+
+document.getElementById("messageIcon").addEventListener('click', function () {
+    let chat = document.getElementById("chatUSER");
+
+    // Toggle the display property
+    chat.style.display = (chat.style.display === "block") ? "none" : "block";
+});

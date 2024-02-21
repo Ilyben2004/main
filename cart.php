@@ -84,22 +84,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
     <div style="display: inline-block; margin-top: 10px;"><a href="signup.php">Register</a></div>
     <div style="display: inline-block; margin-top: 10px;"><a href="login.php">Sign in</a></div>
 <?php } else { ?>
-  <div style="display: inline-block;">
-       <button type="button" id="editProfileBtn" class="btn btn-light" style="margin-top: 10px;">
-       <i class="fa-regular fa-pen-to-square" style="margin-right: 8px;"> </i>Edit Profile
-      </button>
-    </div>
+  
     <form method="post" style="display: inline-block;">
         <button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">
         <i class="fa-solid fa-arrow-right-from-bracket" ></i>
       </button>
     </form>
-    <script>
-    document.getElementById('editProfileBtn').addEventListener('click', function() {
-        var editProfileSection = document.getElementById('editProfileSection');
-        editProfileSection.style.display = 'block';
-    });
-</script>
+   
 
 <?php } ?>
 							</div>
@@ -273,7 +264,7 @@ foreach ($cartResult as $row) {
             </div>
         </td>
         <td class="align-middle">
-            <p class="mb-0" style="font-weight:bolder"><?php echo $row['PRIX']; ?> MAD</p>
+            <p class="mb-0" style="font-weight:bolder"><?php echo $row['PRIX']; ?> USD</p>
         </td>
       </tr>
 <?php } ?>
@@ -288,19 +279,19 @@ foreach ($cartResult as $row) {
                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                   <p class="mb-2">Subtotal</p>
                   <p class="mb-2" id="subtotalValue"><?php echo number_format(executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id  WHERE p.id_user =$userId GROUP BY p.id_user;
-")) ?> MAD</p>
+")) ?> USD</p>
                 </div>
 
                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                   <p class="mb-0">Shipping</p>
-                  <p class="mb-0">20 MAD</p>
+                  <p class="mb-0">20 USD</p>
                 </div>
 
                 <hr class="my-4">
                 <button type="button" class="btn btn-primary btn-block btn-lg" style="width: 245px; margin-top:38px"; id="checkoutButton" data-user-id="<?php echo $userId ?>">
                   <div class="d-flex justify-content-between">
                     <span>Total bill :</span>
-                    <span style="margin-left: 8px;" id="totalValue"> <?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id WHERE p.id_user=$userId GROUP BY p.id_user"), 2) ?> MAD</span>
+                    <span style="margin-left: 8px;" id="totalValue"> <?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id WHERE p.id_user=$userId GROUP BY p.id_user"), 2) ?> USD</span>
                   </div>
 
                 </button>

@@ -70,7 +70,6 @@ if (isset($_GET['id'])) {
           <link rel="stylesheet" href="css/cart.css">
           <link rel="stylesheet" href="css/product_page.css">
 
-          <script src="js/index.js" defer></script>
           
 
   </head>
@@ -93,15 +92,12 @@ if (isset($_GET['id'])) {
 <div style="display: inline-block; margin-top: 10px;"><a href="login.php">Sign in</a></div>
 <?php } else { ?>
 
-<form method="post" style="display: inline-block;">
-<button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">Log-Out</button>
-</form>
-<script>
-document.getElementById('editProfileBtn').addEventListener('click', function() {
-var editProfileSection = document.getElementById('editProfileSection');
-editProfileSection.style.display = 'block';
-});
-</script>
+  <form method="post" style="display: inline-block;">
+        <button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">
+        <i class="fa-solid fa-arrow-right-from-bracket" ></i>
+      </button>
+    </form>
+
 
 <?php } ?>
                     </div>
@@ -127,15 +123,7 @@ editProfileSection.style.display = 'block';
             <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
                 <div class="header_search">
                     <div class="header_search_content">
-                        <div class="header_search_form_container">
-        <form action="#" class="header_search_form clearfix" id="searchForm">
-<input type="search" required="required" class="header_search_input" id="searchInput" placeholder="Search for products...">
-<button type="button" class="header_search_button trans_300" id="searchButton">
-<img src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1560918770/search.png" alt="">
-</button>
-</form>
-
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -212,14 +200,14 @@ editProfileSection.style.display = 'block';
                         </div>
 
                         <div class="price-area my-4">
-                            <p class="new-price text-bold mb-1"><b>Price:</b> <h5><?php echo $product['PRIX']; ?><b> MAD</b> </h5></p>
+                            <p class="new-price text-bold mb-1"><b>Price:</b> <b><h5><?php echo $product['PRIX']; ?> USD</b> </h5></p>
                         </div>
                         <div class="product-details my-4">
                             <p class="details-title text-color mb-1"><b>Product Details :</b></p>
                             <p class="description"><?php echo $product['DESCREPTION']; ?></p>
                         </div>
                         <div class="buttons d-flex my-5">
-      <button class="buyNowButton btn btn-primary" style="padding: 16px; width:300px;"
+      <button  id= "buy_bttn"class="buyNowButton btn btn-primary" style="padding: 16px; width:300px;"
                 data-product-id="<?php echo $product['id']; ?>"
                 data-price="<?php echo $product['PRIX'];?>"
                 data-user-id="<?php echo $userId; ?>"
@@ -246,10 +234,12 @@ editProfileSection.style.display = 'block';
         </div>
     </div>
     </div>
+    <hr>
 
 
     <h2 class="font-weight-bold mb-0"  style=" max-width: 50%; text-align: justify; margin-left:2%;color:#3498db"><span>
     <i class="fa-solid fa-cart-shopping"></i></span>
+   
                      Similiar Products : </h2>
     
     
@@ -271,6 +261,7 @@ editProfileSection.style.display = 'block';
 }
 ?>
         
+       
 
 
     <!-- ================================footer========================================================================== -->
@@ -280,26 +271,7 @@ editProfileSection.style.display = 'block';
     <!-- Footer -->
   <footer class="text-center text-lg-start bg-body-tertiary text-muted">
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-      <div >
-        <a href="" class="me-4 text-reset">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="" class="me-4 text-reset">
-          <i class="fab fa-twitter"></i>
-        </a>
-        <a href="" class="me-4 text-reset">
-          <i class="fab fa-google"></i>
-        </a>
-        <a href="" class="me-4 text-reset">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="" class="me-4 text-reset">
-          <i class="fab fa-linkedin"></i>
-        </a>
-        <a href="" class="me-4 text-reset">
-          <i class="fab fa-github"></i>
-        </a>
-      </div>
+     
     </section>
     <section class="">
       <div class="container text-center text-md-start mt-5">
@@ -448,6 +420,10 @@ editProfileSection.style.display = 'block';
     });
   
 </script> 
+
+<script src="js/index.js" >
+
+
 
 <audio id="likesound" src="product_images/likeSound.mp3"></audio>
 </body>

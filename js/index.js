@@ -64,8 +64,8 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     
     function attachAddToCartListeners() {
+        console.log("heeehppp");
         var addToCartButtons = document.querySelectorAll('.addToCartButton');
-        var buyNowButtons = document.querySelectorAll('.buyNowButton');
     
         addToCartButtons.forEach(function (button) {
             button.addEventListener('click', function () {
@@ -855,7 +855,9 @@ function getBillFromDatabase(indiceUser, callback) {
 }
 
 // Usage with a callback function
-getBillFromDatabase(1, function (price) {
-    console.log("total price is : " + price);
-});
+
+
+/////////////////////////////////////////////////
+
+
 

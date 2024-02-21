@@ -101,7 +101,7 @@ GROUP BY
    p.image_file, 
    c.Category_name
 ORDER BY 
-   p.title;
+   p.quantity;
 ");
    if ($res->num_rows > 0){
    while($row = $res->fetch_assoc()){
@@ -172,7 +172,7 @@ LEFT JOIN (
         idProduct
 ) l ON p.id = l.idProduct
 ORDER BY 
-    p.title;
+    p.quantity;
 
   ");
     if ($res->num_rows > 0){
@@ -968,8 +968,11 @@ function getConversationforAdmin($idUser){
 
 }
 
+///////////////////////////////////////////
 
 
 
 ?>
+
+
 

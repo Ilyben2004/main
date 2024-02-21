@@ -1297,7 +1297,7 @@ padding-top: 1%;
    height: 70px;
 	padding: 20px;
 	margin-top: -3%;
-	margin-left: 98%;
+	margin-left: 78%;
 
   }
   
@@ -1311,7 +1311,7 @@ padding-top: 1%;
   }
   
   .cardPriceFilter  p {
-	font-size: 16px;
+	font-size: 14px;
 	font-weight: 700;
   }
  
@@ -1391,11 +1391,13 @@ padding-right: 1%;
 
 
 	div#chatUSER{
+		font-weight: bold;
+
 		background-color: #ffffff;
 		position: fixed;
 		right: 5%;
 		bottom: 5%;
-		height: 450px;
+		height: 430px;
 		width: 300px;
 		z-index: 100;
 		padding-left: 0.3%;
@@ -1404,6 +1406,8 @@ padding-right: 1%;
 		box-shadow: -15px 10px 39px -8px rgba(0,0,0,0.7);
 		-webkit-box-shadow: -15px 10px 39px -8px rgba(0,0,0,0.7);
 		-moz-box-shadow: -15px 10px 39px -8px rgba(0,0,0,0.7);
+		display: none;
+		
 	}
 
 
@@ -1420,6 +1424,7 @@ padding-right: 1%;
 
 		padding: 10px;
 		font-family: Arial, sans-serif;
+		border-bottom: 1px rgba(128, 128, 128, 0.244) solid ;
 	  }
 	  
 	  .message {
@@ -1448,3 +1453,20 @@ padding-right: 1%;
 		margin-right: 8px;
 	  }
 	  
+	  input#MessageInput{
+		width: 100%;
+		height: 1cm;
+		border: none;
+	  }
+	div#header{
+		padding-left: 3%;
+		padding-top: 2%;
+	}
+
+
+	#ilyasCard{
+		margin-left: 25%;
+		box-shadow: -39px 10px 263px 0px rgba(0,0,0,0.20);
+		-webkit-box-shadow: -39px 10px 263px 0px rgba(0,0,0,0.20);
+		-moz-box-shadow: -39px 10px 263px 0px rgba(0,0,0,0.20);
+	}

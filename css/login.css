@@ -25,3 +25,6 @@ body {
     border:rgba(240, 218, 218, 0.822) 1px solid ;
     border-radius: 4%;
   }
+  #isSuspensed{
+    color: rgb(215, 79, 79);
+  }

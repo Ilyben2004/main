@@ -1,6 +1,6 @@
 
 <?php
-
+$is_suspended = 0;
 
 function db() {
     $host = "localhost:3306";
@@ -40,9 +40,10 @@ $conn=db();
             
             
             $is_admin = $row['IS_ADMIN'];
+            $is_suspended = $row['Suspended'];
             session_start(); 
             
-
+if($is_suspended==0){
         if($is_admin==0){
 
            
@@ -59,8 +60,8 @@ $conn=db();
 
                 header("Location: admin\dash.php");
 
-            }
-
+            }}
+           
     
     
     
@@ -130,6 +131,18 @@ $conn=db();
             </form>
             <a href="signup.php">
     <button class="btn btn-primary btn-login text-uppercase fw-bold" style="width: 340px;"> Sign up </button>
+    <?php if($is_suspended==1){
+      ?>
+
+      <div id="isSuspensed">
+        <center>Sorry but your Account has been suspensed</center>
+        
+      </div>
+
+      <?php 
+
+    }?>
+ 
 </a>
           </div>
         </div>

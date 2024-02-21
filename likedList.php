@@ -87,11 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['logout'])) {
 <?php } else { ?>
     
   
-  <a href="index.php">
-    <div style="display: inline-block;">
-       <button type="button"  class="btn btn-light" style="margin-top: 10px;">
-       <i class="fa-solid fa-house"></i>      </button>
-    </div></a>
+  
    
     <form method="post" style="display: inline-block;">
         <button type="submit" class="btn btn-light" style="margin-top: 10px;" name="logout">

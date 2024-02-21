@@ -40,7 +40,7 @@ GROUP BY
 WHERE 
 (p.title LIKE '%$name%' OR p.title LIKE '%$name' OR p.title LIKE '$name%')
 ORDER BY 
-p.title;
+p.quantity;
 
 ";
 

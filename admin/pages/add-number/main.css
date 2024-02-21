@@ -235,3 +235,15 @@ font-size: 20px;
   
 
 }
+#deleteCategory{
+  margin-left: 5%;
+  font-size: 20px;
+
+  cursor: pointer;
+
+}
+#deleteCategory:hover{
+  color: rgb(186, 78, 78);
+ 
+
+}

@@ -594,11 +594,9 @@ if($userId!=0){ ?>
   <!-- Add more messages with images as needed -->
 </div>
 
-   <hr>
 
   <footer>
-    <input type="text" id="MessageInput">
-    <button id="sendMessage" >send</button>
+    <input type="text" id="MessageInput" placeholder="Send Your Message Here ...">
   </footer>
 
 </div>

@@ -30,8 +30,8 @@ function validateRange() {
   rangeFill.style.width = maxPercentage - minPercentage + "%";
 
   // Update the displayed min and max values
-  minValue.innerHTML = minPrice+' MAD';
-  maxValue.innerHTML =   maxPrice+' MAD';
+  minValue.innerHTML = minPrice+' USD';
+  maxValue.innerHTML =   maxPrice+' USD';
 }
 
 // Get references to the input elements
@@ -170,8 +170,8 @@ function validaterangeInitial(){
   rangeFill.style.width = maxPercentage - minPercentage + "%";
 
   // Update the displayed min and max values
-  minValue.innerHTML = minPrice+' MAD';
-  maxValue.innerHTML =   maxPrice+' MAD';
+  minValue.innerHTML = minPrice+' USD';
+  maxValue.innerHTML =   maxPrice+' USD';
 
 originalElement.innerHTML=clonedElement.innerHTML;
 var svgContainers = document.querySelectorAll('.svgContainer');
@@ -235,7 +235,7 @@ body: new URLSearchParams({
 })
 .then(response => response.text())
 .then(data => {
-console.log(data); // Handle the response from PHP
+console.log("waaw" +data); // Handle the response from PHP
 this.innerHTML='<img src="./product_images/hearted.png" alt="">';
             this.setAttribute('isLiked',1);
             var audio =document.getElementById('likesound');
