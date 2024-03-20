@@ -16,7 +16,7 @@ if ($userResult && mysqli_num_rows($userResult) > 0) {
     $userId = $userRow['id'];
 }
 
-$sql = "SELECT * FROM orders WHERE id_user = '$userId' AND STATUS != 'Cancelled'";
+$sql = "SELECT * FROM orders WHERE id_user = '$userId' ";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -43,7 +43,7 @@ if ($result->num_rows > 0) {
         $currentDate = strtotime(date("Y-m-d"));
     
         $action = '';
-        if ($deliveryDate > $currentDate) {
+        if ($deliveryDate > $currentDate AND  $row["STATUS"]!="Cancelled" AND  $row["STATUS"]!="Completed" ) {
             $confirmationMessage = "Are you sure you want to cancel this order?";
             $action = '<button class="btn btn-danger" onclick="showConfirmationDialog(\'Are you sure you want to cancel this order?\', ' . $row["id"] . ');">Cancel Order</button>';
         } else {
