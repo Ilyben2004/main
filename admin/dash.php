@@ -23,6 +23,7 @@ if (isset($_SESSION['username'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <link rel="icon" type="image/jpeg" href="../gym.jpeg"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -109,8 +110,6 @@ if (isset($_SESSION['username'])) {
 						
 					</li>
 					
-					
-				
 				</ul>
 			</section>
 		
@@ -123,7 +122,7 @@ if (isset($_SESSION['username'])) {
 	<main id="mainmenu" class="content-wrap">
 
 	<div id="menu">
-
+	
 
 
 	
@@ -145,13 +144,15 @@ if (isset($_SESSION['username'])) {
 
 
 	<div class="charts">
-		<center><div class="search">
-		<label for="search">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>
-				<input id="oneInput" class="searchInput" type="text" placeholder="Id or Title" id="search">
-			</label>
+		<center>
+			<div class="chooseSomething" id="chooseTheProduct">Choose a Product</div>
+			<script> document.getElementById("chooseTheProduct").addEventListener('click',function (){
+				document.getElementById("CategoryProducts").style.display="block";
+				let dashboard = document.queryselector('div.dashboard')
+				dashboard.body.style.filter = "blur(20px)";
+			}) </script>
+		</center>
 		
-		</div></center>
 		<canvas id="searchChartProduct">
 
 		</canvas>
@@ -237,13 +238,14 @@ if (isset($_SESSION['username'])) {
   <div id="stasContainer">
 
 	     <div class="charts">
-		 <center><div class="search">
-		<label for="search">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M10 18a7.952 7.952 0 0 0 4.897-1.688l4.396 4.396 1.414-1.414-4.396-4.396A7.952 7.952 0 0 0 18 10c0-4.411-3.589-8-8-8s-8 3.589-8 8 3.589 8 8 8zm0-14c3.309 0 6 2.691 6 6s-2.691 6-6 6-6-2.691-6-6 2.691-6 6-6z"/></svg>
-				<input id="CategoryInput" class="searchInput" type="text" placeholder="Id or Title" id="search">
-			</label>
-		
-		</div></center>
+		 <center>
+		 <div class="chooseSomething" id="chooseTheCategory">Choose a Category</div>
+			<script> document.getElementById("chooseTheCategory").addEventListener('click',function (){
+				document.getElementById("AllCategorys").style.display="flex";
+				
+			}) </script>
+
+			</center>
 		<canvas id="CategorysCharts">
          </canvas>
          </div>
@@ -414,6 +416,82 @@ There is no Informations About this id or title
 	</div>
 </div>
 
+
 </div>
+
+
+
+
+
+
 </body>
+<div class="popup" id="CategoryProducts">
+	<div id="imdivContain">
+<div class="catesContainers">
+<?php 
+$Categories = get_all_cate();
+$className = "choosen";
+
+
+
+
+foreach ($Categories as $cate) {
+
+
+
+?>
+<div  categoryName="<?php echo $cate['Category_name'] ?>" class="category <?php echo $className;?>">
+	<?php echo $cate['Category_name'] ?>
+</div>
+<?php
+$className=""; } ?>
+</div>
+<div class="productsContainer">
+
+<?php 
+$Products =getAllProducts();
+
+
+foreach ($Products as $product) {
+
+
+
+?>
+<div idProduct="<?php echo $product['id'] ;?>"   CategoryOfProduct="<?php echo $product['Category_name'] ?>" class="products">  <?php echo $product['title'] ;?> </div>
+<?php }?>
+
+</div>
+
+	
+</div>
+</div>
+
+
+<div id="AllCategorys"  class="popup">
+<div class="catesContainers">
+
+<?php 
+
+
+
+
+
+foreach ($Categories as $cate) {
+
+
+
+?>
+<div idCate="<?php echo $cate['id'] ?>"  categoryName="<?php echo $cate['Category_name'] ?>" class="category">
+	<?php echo $cate['Category_name'] ?>
+</div>
+<?php
+ } ?>
+	
+
+
+</div>
+
+</div>
+<script src="chooseProduct.js" ></script>
+
 </html>

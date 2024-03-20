@@ -9,6 +9,7 @@ $jsonData = json_encode($notifications);
 
 // Echo the JSON data
 echo $jsonData;
+
       
 
 

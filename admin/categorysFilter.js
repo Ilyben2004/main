@@ -36,47 +36,7 @@ function searchChartCategories(label, dataa) {
 
 var myChartInstance;
 
-document.getElementById('CategoryInput').addEventListener('keydown', function (event) {
-  if (event.keyCode === 13) {
-      const data = this.value;
-      $.ajax({
-          url: 'phpGetData/OneCategory.php',
-          type: 'GET',
-          data: { data: data },
-          success: function (response) {
-              console.log(response);
 
-              if (response != 0) {
-                  var label = [];
-                  var dataa = [];
-
-                  var phpData = JSON.parse(response);
-                  console.log(phpData.length);
-                  console.log("*****************"+phpData);
-
-                  if(phpData==data){
-                             
-                      noReasultsDiv();
-                    
-                  }
-                  for (var i = 0; i < phpData.length; i++) {
-                      label[i] = phpData[i].order_month;
-                      dataa[i] = phpData[i].total_sold;
-                  }
-
-                  console.log(label);
-                  console.log(dataa);
-
-                  // Call searchChartCategories function
-                  searchChartCategories(label, dataa);
-              }
-          },
-          error: function (error) {
-              console.error(error);
-          }
-      });
-  }
-});
 
 ////////////////////////////////////////////////////////AllCategorysChart//////////////////////////////////////////////
 

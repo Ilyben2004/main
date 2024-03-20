@@ -24,7 +24,14 @@ document.getElementById('buttonmessage').addEventListener('click', function () {
 
                 console.log(phpData[i].type);
                 console.log(phpData[i].dateMessage);
-                popup.innerHTML += `<div class="itsnotis" link="${href}">
+                console.log(phpData[i].readed);
+                let classhh = "";
+                if(phpData[i].readed==1){
+                    classhh="readed";
+
+                }
+
+                popup.innerHTML += `<div class="itsnotis ${classhh}" link="${href}">
                     <div class="iconoti">${currentSvg}</div>
                     <div class="message">${phpData[i].message} ${phpData[i].dateMessage}</div>
                 </div>`;

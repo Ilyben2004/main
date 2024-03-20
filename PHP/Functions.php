@@ -320,7 +320,7 @@ function GetAllStatusCommands(){
             $command_status[] = $row;
         }
     } else {
-        $command_status =$data;
+        $command_status =0;
     }
     return $command_status;
  
@@ -556,9 +556,8 @@ function executeUpdateQuery($updateQuery) {
     if ($conn) {
         // Execute the UPDATE query
         if ($conn->query($updateQuery) === TRUE) {
-            echo "Update query executed successfully";
+           
         } else {
-            echo "Error executing update query: " . $conn->error;
         }
 
         // Close the database connection
@@ -597,6 +596,7 @@ function getTimeDifference($dateTime) {
 
     return $formattedInterval . ' ago';
 }
+
 function getAllNotifications(){
     $mysqli = connect();
     $res = $mysqli->query("SELECT * FROM notifications order by id desc");
@@ -612,6 +612,7 @@ function getAllNotifications(){
     } else {
         $notifications = 0;
     }
+    executeUpdateQuery("UPDATE notifications Set readed=1");
 
     return $notifications;
 }
@@ -624,7 +625,6 @@ function insertNotification($message, $type) {
     
     $notiQuery = "INSERT INTO notifications (message,dateMessage,type) values ('$message','$formattedDateTime', '$type')";
     mysqli_query($conn, $notiQuery);
-
     $conn->close();
 }
 
