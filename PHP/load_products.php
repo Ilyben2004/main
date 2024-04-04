@@ -50,7 +50,7 @@ if ($result && mysqli_num_rows($result) > 0) {
  
    </div>
       <h2><?php echo  truncateString( $row['title']); ?></h2>
-      <p class="PRIX"><b><?php echo $row['PRIX']; ?> USD</b></p>
+      <p class="PRIX"><b><?php echo $row['PRIX']; ?> MAD</b></p>
     </a>
     <p>
       <button class="addToCartButton"

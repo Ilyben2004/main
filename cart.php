@@ -264,7 +264,7 @@ foreach ($cartResult as $row) {
             </div>
         </td>
         <td class="align-middle">
-            <p class="mb-0" style="font-weight:bolder"><?php echo $row['PRIX']; ?> USD</p>
+            <p class="mb-0" style="font-weight:bolder"><?php echo $row['PRIX']; ?> MAD</p>
         </td>
       </tr>
 <?php } ?>
@@ -279,19 +279,19 @@ foreach ($cartResult as $row) {
                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                   <p class="mb-2">Subtotal</p>
                   <p class="mb-2" id="subtotalValue"><?php echo number_format(executeSingleValueQuery("SELECT  SUM(p.quantity * pr.PRIX) AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id  WHERE p.id_user =$userId GROUP BY p.id_user;
-")) ?> USD</p>
+")) ?> MAD</p>
                 </div>
 
                 <div class="d-flex justify-content-between" style="font-weight: 500;">
                   <p class="mb-0">Shipping</p>
-                  <p class="mb-0">20 USD</p>
+                  <p class="mb-0">20 MAD</p>
                 </div>
 
                 <hr class="my-4">
                 <button type="button" class="btn btn-primary btn-block btn-lg" style="width: 245px; margin-top:38px"; id="checkoutButton" data-user-id="<?php echo $userId ?>">
                   <div class="d-flex justify-content-between">
                     <span>Total bill :</span>
-                    <span style="margin-left: 8px;" id="totalValue"> <?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id WHERE p.id_user=$userId GROUP BY p.id_user"), 2) ?> USD</span>
+                    <span style="margin-left: 8px;" id="totalValue"> <?php echo number_format(executeSingleValueQuery("SELECT SUM(p.quantity * pr.PRIX) + 20 AS total_price FROM panier p JOIN products pr ON p.id_product = pr.id WHERE p.id_user=$userId GROUP BY p.id_user"), 2) ?> MAD</span>
                   </div>
 
                 </button>

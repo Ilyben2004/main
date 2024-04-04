@@ -200,7 +200,7 @@ if (isset($_GET['id'])) {
                         </div>
 
                         <div class="price-area my-4">
-                            <p class="new-price text-bold mb-1"><b>Price:</b> <b><h5><?php echo $product['PRIX']; ?> USD</b> </h5></p>
+                            <p class="new-price text-bold mb-1"><b>Price:</b> <b><h5><?php echo $product['PRIX']; ?> MAD</b> </h5></p>
                         </div>
                         <div class="product-details my-4">
                             <p class="details-title text-color mb-1"><b>Product Details :</b></p>
